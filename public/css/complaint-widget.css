@@ -1,0 +1,20 @@
+.complaint-widget { position: fixed; right: max(24px, env(safe-area-inset-right)); bottom: max(88px, calc(env(safe-area-inset-bottom) + 76px)); z-index: 850; color: #203a2b; }
+.complaint-widget.complaint-map-visible { visibility: hidden; pointer-events: none; }
+.complaint-panel { width: min(390px, calc(100vw - 24px)); max-height: min(75dvh, 700px); overflow-y: auto; background: #fff; border: 1px solid #e2e9e2; border-radius: 16px; box-shadow: 0 12px 40px #102c1e40; padding: 20px; margin-bottom: 10px; }
+.complaint-panel[hidden] { display: none; }
+.complaint-heading { display: flex; gap: 12px; justify-content: space-between; }
+.complaint-heading h2 { font-size: 20px; margin: 0; }
+.complaint-heading p { font-size: 13px; line-height: 1.5; margin: 6px 0 14px; }
+.complaint-heading button { border: 0; background: transparent; font-size: 26px; cursor: pointer; align-self: start; }
+.complaint-panel label { display: block; font-size: 13px; font-weight: 650; margin: 12px 0; }
+.complaint-panel label > span { color: #ad302a; }
+.complaint-panel input:not([type=hidden]), .complaint-panel select, .complaint-panel textarea { display: block; width: 100%; box-sizing: border-box; margin-top: 5px; padding: 10px; border: 1px solid #d7dfd8; border-radius: 8px; background: #f7f9f7; color: #1d3325; font: inherit; }
+.complaint-panel small { font-weight: 400; color: #506258; }
+.complaint-panel input:focus-visible, .complaint-panel select:focus-visible, .complaint-panel textarea:focus-visible, .complaint-widget button:focus-visible { outline: 3px solid #247449; outline-offset: 2px; }
+.complaint-feedback, .complaint-unavailable { font-size: 13px; line-height: 1.5; }
+.complaint-submit { width: 100%; border: 0; border-radius: 9px; padding: 12px; background: #216342; color: #fff; font-weight: 700; cursor: pointer; }
+.complaint-submit:disabled { opacity: .6; cursor: not-allowed; }
+.complaint-toggle { display: block; margin-left: auto; padding: 13px 18px; background: #f6c3bd; color: #4c2522; border: 1px solid #fff; border-radius: 15px; box-shadow: 0 6px 22px #321b1b24; font-weight: 700; cursor: pointer; transition: background .2s; }
+.complaint-toggle:hover { background: #f2aba3; }
+@media (max-width: 600px) { .complaint-widget { right: max(12px, env(safe-area-inset-right)); bottom: max(78px, calc(env(safe-area-inset-bottom) + 70px)); } .complaint-panel { max-height: 65dvh; padding: 16px; } }
+@media (prefers-reduced-motion: reduce) { .complaint-toggle { transition: none; } }

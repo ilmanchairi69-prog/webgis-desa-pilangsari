@@ -1,0 +1,119 @@
+.village-portal .gov-page { --gov-ink:#173b2d; --gov-muted:#52675a; --gov-border:#dce8d9; --gov-gold:#e6d6a4; background:#fbfcf8; color:var(--gov-ink); }
+.village-portal .gov-page * { box-sizing:border-box; }
+.village-portal .gov-page .portal-section { padding-block:clamp(60px,7vw,96px); }
+.village-portal .gov-page h1,.village-portal .gov-page h2,.village-portal .gov-page h3,.village-portal .gov-page h4 { letter-spacing:-.035em; line-height:1.2; }
+.village-portal .gov-kicker { color:#4d7958; font-size:11px; letter-spacing:.15em; font-weight:800; }
+.village-portal .gov-hero { position:relative; overflow:hidden; color:#fff; background:radial-gradient(circle at 82% 15%,#497c5c 0,transparent 34%),linear-gradient(130deg,#0b3027,#235943); }
+.village-portal .gov-hero::after { content:''; position:absolute; width:430px; height:430px; border:1px solid #ffffff12; border-radius:50%; right:-130px; bottom:-210px; box-shadow:0 0 0 65px #ffffff08,0 0 0 130px #ffffff05; pointer-events:none; }
+.village-portal .gov-hero-inner { display:grid; grid-template-columns:1fr 300px; align-items:center; gap:50px; padding-block:38px 70px; position:relative; z-index:1; }
+.village-portal .gov-hero .portal-breadcrumb { display:block; color:#d3e5d7; font-size:12px; margin:0 0 30px; }
+.village-portal .gov-hero .gov-kicker { color:#e6d6a4; }
+.village-portal .gov-hero h1 { max-width:720px; color:#fff; font-size:clamp(40px,5.5vw,68px); margin:14px 0 18px; }
+.village-portal .gov-hero h1 em { color:#e6d6a4; font-style:normal; }
+.village-portal .gov-hero p { color:#e2eee3; font-size:16px; line-height:1.7; }
+.village-portal .gov-hero-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:28px; }
+.village-portal .gov-hero-tags span { border:1px solid #ffffff42; border-radius:999px; padding:8px 12px; font-size:12px; color:#eff8ed; }
+.village-portal .gov-hero-emblem { text-align:center; border:1px solid #ffffff32; background:#ffffff0d; padding:28px; border-radius:24px; backdrop-filter:blur(4px); }
+.village-portal .gov-hero-emblem div { display:grid; place-items:center; margin:auto auto 18px; width:62px; height:62px; border-radius:20px; background:#e6d6a4; color:#174532; }
+.village-portal .gov-hero-emblem svg { width:30px; height:30px; }
+.village-portal .gov-hero-emblem span,.village-portal .gov-hero-emblem small,.village-portal .gov-hero-emblem strong { display:block; }
+.village-portal .gov-hero-emblem span,.village-portal .gov-hero-emblem small { color:#e2ebd8; font-size:10px; letter-spacing:.13em; }
+.village-portal .gov-hero-emblem strong { font-size:30px; margin:8px 0; }
+.village-portal .gov-intro-heading { display:flex; align-items:end; justify-content:space-between; gap:40px; margin-bottom:30px; }
+.village-portal .gov-intro-heading h2,.village-portal .gov-functions h2,.village-portal .gov-digital h2 { font-size:clamp(29px,3.3vw,44px); margin:12px 0 0; }
+.village-portal .gov-intro-heading > div { max-width:540px; }
+.village-portal .gov-intro-heading p,.village-portal .gov-functions p { max-width:480px; color:var(--gov-muted); font-size:15px; line-height:1.8; margin:0; }
+.village-portal .gov-stats { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:12px; }
+.village-portal .gov-stat { padding:20px 16px; border:1px solid var(--gov-border); border-radius:18px; background:#fff; }
+.village-portal .gov-stat-icon { width:38px; height:38px; display:grid; place-items:center; border-radius:12px; background:#edf5e9; color:#376a48; margin-bottom:16px; }
+.village-portal .gov-stat-icon svg { width:20px; height:20px; }
+.village-portal .gov-stat strong,.village-portal .gov-stat div span { display:block; }
+.village-portal .gov-stat strong { font-size:26px; line-height:1.1; }
+.village-portal .gov-stat div span { color:var(--gov-muted); font-size:12px; margin-top:6px; }
+.village-portal .gov-welcome-section,.village-portal .gov-team-section { background:#f0f5ed; }
+.village-portal .gov-section-title { max-width:750px; margin:0 auto 38px; text-align:center; }
+.village-portal .gov-section-title h2 { font-size:clamp(29px,3.3vw,42px); margin:12px 0; }
+.village-portal .gov-section-title p { color:var(--gov-muted); font-size:15px; line-height:1.7; margin:0; }
+.village-portal .gov-welcome { display:grid; grid-template-columns:minmax(240px, .72fr) minmax(0, 1.55fr); gap:24px; align-items:start; }
+.village-portal .gov-leader-card { background:#fff; border:1px solid var(--gov-border); border-radius:22px; padding:10px; box-shadow:0 14px 38px #183b2b0d; overflow:hidden; }
+.village-portal .gov-leader-top { min-height:300px; display:flex; align-items:center; justify-content:center; flex-direction:column; border-radius:15px; background:radial-gradient(circle at 50% 25%,#4d8260,#164532 70%); color:#fff; }
+.village-portal .gov-leader-badge { padding:7px 12px; background:#ffffff1f; border:1px solid #ffffff30; border-radius:999px; font-size:10px; letter-spacing:.11em; }
+.village-portal .gov-leader-avatar { width:126px; height:126px; display:grid; place-items:center; margin:24px 0 18px; border:1px solid #ffffff6b; border-radius:50%; background:#e6d6a4; color:#174532; font-size:42px; font-weight:800; box-shadow:0 0 0 12px #ffffff12; }
+.village-portal .gov-leader-line { width:44px; height:3px; border-radius:3px; background:#e6d6a4; }
+.village-portal .gov-leader-details { padding:22px 18px 18px; }
+.village-portal .gov-leader-details > span { color:#5d805e; font-size:10px; font-weight:800; letter-spacing:.12em; }
+.village-portal .gov-leader-details h3 { font-size:22px; margin:9px 0; }
+.village-portal .gov-leader-details p { color:var(--gov-muted); margin:0; font-size:13px; }
+.village-portal .gov-letter,.village-portal .gov-org { padding:clamp(22px,4vw,42px); background:#fff; border:1px solid var(--gov-border); border-radius:22px; box-shadow:0 14px 38px #183b2b0a; }
+.village-portal .gov-letter-heading { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:start; gap:12px; padding-bottom:22px; border-bottom:1px solid #e7eee4; }
+.village-portal .gov-letter-heading h3 { margin:8px 0 0; font-size:25px; }
+.village-portal .gov-letter-body { color:#425a4c; font-size:15px; line-height:1.85; }
+.village-portal .gov-letter-body p { margin:18px 0 0; }
+.village-portal .gov-letter-signoff { display:flex; flex-direction:column; gap:7px; margin-top:28px; padding-top:20px; border-top:1px solid #e7eee4; }
+.village-portal .gov-letter-signoff span { color:var(--gov-muted); font-size:13px; }
+.village-portal .gov-letter-signoff strong { font-size:17px; }
+.village-portal .gov-org-heading { display:flex; justify-content:space-between; gap:20px; align-items:center; padding-bottom:22px; border-bottom:1px solid #e7eee4; }
+.village-portal .gov-org-heading h3 { margin:8px 0 0; font-size:22px; }
+.village-portal .gov-org-mark { display:grid; place-items:center; width:46px; height:46px; border-radius:14px; background:#edf5e9; color:#376a48; }
+.village-portal .gov-org-mark svg { width:23px; height:23px; }
+.village-portal .gov-org-leaders { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; margin:24px 0; }
+.village-portal .gov-org-leader { padding:22px; border-radius:16px; background:#174b37; color:#fff; }
+.village-portal .gov-org-leader span,.village-portal .gov-org-leader strong,.village-portal .gov-org-leader small { display:block; }
+.village-portal .gov-org-leader span { color:#d5e3cb; font-size:11px; text-transform:uppercase; letter-spacing:.1em; }
+.village-portal .gov-org-leader strong { margin:10px 0 4px; font-size:18px; }
+.village-portal .gov-org-leader small { color:#d9e9dd; font-size:12px; }
+.village-portal .gov-org-groups { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; }
+.village-portal .gov-org-group { border:1px solid #e0eadc; border-radius:16px; overflow:hidden; background:#f9fbf7; }
+.village-portal .gov-org-group h4 { margin:0; padding:16px; background:#eaf3e6; color:#235b3b; font-size:15px; }
+.village-portal .gov-org-group > div { display:flex; flex-direction:column; gap:4px; padding:14px 16px; border-top:1px solid #e6eee3; }
+.village-portal .gov-org-group strong { font-size:14px; }
+.village-portal .gov-org-group span { color:var(--gov-muted); font-size:12px; }
+.village-portal .gov-team-group + .gov-team-group { margin-top:32px; }
+.village-portal .gov-team-heading { display:flex; justify-content:space-between; align-items:center; gap:15px; margin-bottom:15px; }
+.village-portal .gov-team-heading h3 { font-size:21px; margin:0; }
+.village-portal .gov-team-heading > span { color:var(--gov-muted); font-size:12px; }
+.village-portal .gov-team-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.village-portal .gov-person { padding:24px; border:1px solid var(--gov-border); border-radius:20px; background:#fff; box-shadow:0 8px 26px #183b2b08; transition:transform .2s,box-shadow .2s; }
+.village-portal .gov-person:hover { transform:translateY(-4px); box-shadow:0 15px 32px #183b2b14; }
+.village-portal .gov-person-top { display:flex; justify-content:space-between; align-items:start; margin-bottom:22px; }
+.village-portal .gov-person-avatar { display:grid; place-items:center; width:64px; height:64px; border-radius:20px; background:#e7f1e2; color:#285d3e; font-size:25px; font-weight:800; }
+.village-portal .gov-person-icon { color:#78987c; }
+.village-portal .gov-person-icon svg { width:21px; height:21px; }
+.village-portal .gov-person-role { color:#4d7958; font-size:11px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
+.village-portal .gov-person h4 { margin:8px 0; font-size:19px; }
+.village-portal .gov-person p { margin:0; color:var(--gov-muted); font-size:13px; line-height:1.7; }
+.village-portal .gov-functions { background:#e9f2e4; }
+.village-portal .gov-functions-layout { display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(30px,6vw,80px); }
+.village-portal .gov-functions h2 { margin-bottom:18px; }
+.village-portal .gov-function-list { border-top:1px solid #cadcc6; }
+.village-portal .gov-function-list > div { display:grid; grid-template-columns:160px 1fr; gap:20px; padding:19px 0; border-bottom:1px solid #cadcc6; }
+.village-portal .gov-function-list strong { font-size:14px; }
+.village-portal .gov-function-list span { color:var(--gov-muted); font-size:14px; line-height:1.6; }
+.village-portal .gov-areas .village-areas { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.village-portal .gov-areas .village-card { padding:28px; }
+.village-portal .gov-digital { background:linear-gradient(125deg,#0d3329,#245740); color:#fff; overflow:hidden; }
+.village-portal .gov-digital-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,70px); align-items:center; }
+.village-portal .gov-digital .gov-kicker { color:#e6d6a4; }
+.village-portal .gov-digital h2 { color:#fff; margin:14px 0 18px; }
+.village-portal .gov-digital p { color:#e1ede2; font-size:15px; line-height:1.8; }
+.village-portal .gov-digital-benefits { display:flex; flex-wrap:wrap; gap:18px; margin:24px 0; }
+.village-portal .gov-digital-benefits span { display:flex; align-items:center; gap:8px; color:#e5eedf; font-size:13px; font-weight:700; }
+.village-portal .gov-digital-benefits svg { width:18px; height:18px; color:#e6d6a4; }
+.village-portal .gov-map-illustration { border:1px solid #ffffff4d; border-radius:20px; overflow:hidden; background:#fff; box-shadow:0 22px 50px #071c1533; }
+.village-portal .gov-map-top { display:flex; align-items:center; gap:6px; padding:13px 17px; background:#fff; color:#3e5c49; }
+.village-portal .gov-map-top span { width:7px; height:7px; border-radius:50%; background:#cad8c8; }
+.village-portal .gov-map-top strong { font-size:10px; letter-spacing:.11em; margin-left:10px; }
+.village-portal .gov-map-canvas { position:relative; background:linear-gradient(135deg,#dcebd4,#edf4df); }
+.village-portal .gov-map-canvas svg { width:100%; display:block; }
+.village-portal .gov-map-road { fill:none; stroke:#fff; stroke-width:9; opacity:.8; }
+.village-portal .gov-map-boundary { fill:#76a76c33; stroke:#4e8e59; stroke-width:3; stroke-dasharray:7 6; }
+.village-portal .gov-map-pin-ring { fill:#1e69412a; }
+.village-portal .gov-map-pin { fill:#245d3b; }
+.village-portal .gov-map-point { fill:#c49b3d; stroke:#fff; stroke-width:3; }
+.village-portal .gov-map-caption { position:absolute; bottom:12px; right:15px; padding:5px 8px; border-radius:6px; background:#ffffffd9; color:#49614c; font-size:10px; }
+.village-portal .gov-community { background:#f7faf5; }
+.village-portal .gov-community h2 { font-size:clamp(28px,3vw,40px); }
+@media(max-width:1000px) { .village-portal .gov-stats { grid-template-columns:repeat(3,minmax(0,1fr)); } .village-portal .gov-welcome { grid-template-columns:minmax(220px,.8fr) minmax(0,1.3fr); } }
+@media(max-width:700px) { .village-portal .gov-hero-inner,.village-portal .gov-welcome,.village-portal .gov-functions-layout,.village-portal .gov-digital-grid { grid-template-columns:1fr; } .village-portal .gov-hero-inner { gap:25px; padding-block:28px 48px; } .village-portal .gov-hero-emblem { max-width:320px; width:100%; } .village-portal .gov-intro-heading { display:block; } .village-portal .gov-intro-heading p { margin-top:16px; } .village-portal .gov-org-groups,.village-portal .gov-areas .village-areas { grid-template-columns:1fr; } .village-portal .gov-team-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .village-portal .gov-leader-card { max-width:420px; width:100%; margin:auto; } .village-portal .gov-leader-top { min-height:240px; } }
+@media(max-width:420px) { .village-portal .gov-stats { grid-template-columns:repeat(2,minmax(0,1fr)); } .village-portal .gov-org-leaders,.village-portal .gov-team-grid { grid-template-columns:1fr; } .village-portal .gov-function-list > div { grid-template-columns:1fr; gap:6px; } }
+@media(prefers-reduced-motion:reduce) { .village-portal .gov-person { transition:none; } }

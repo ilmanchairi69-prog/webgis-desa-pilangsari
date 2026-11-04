@@ -1,0 +1,68 @@
+﻿.layer-page{display:flex;flex-direction:column;gap:22px}
+.layer-heading{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.layer-eyebrow{display:block;color:#718076;font-size:10px;font-weight:800;letter-spacing:.15em;margin-bottom:9px}
+.layer-heading h1{font-family:Manrope,sans-serif;font-size:30px;letter-spacing:-.045em;margin:0;color:#172019}
+.layer-heading p{font-size:12px;color:#778078;margin:7px 0 0;line-height:1.7}
+.layer-primary-btn,.layer-secondary-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:9px;padding:12px 17px;font-size:12px;font-weight:800;text-decoration:none;cursor:pointer;white-space:nowrap}
+.layer-primary-btn{background:#1e6b3c;color:#fff}
+.layer-primary-btn:hover{background:#14522e;color:#fff}
+.layer-secondary-btn{background:#f1f3ef;color:#364239}
+.layer-secondary-btn:hover{background:#e5eae3}
+.layer-alert{padding:14px 17px;border-radius:10px;font-size:12px}
+.layer-alert ul{margin:7px 0 0;padding-left:20px}
+.layer-alert-success{background:#eaf5eb;color:#21633a;border:1px solid #d5ead8}
+.layer-alert-error{background:#fff0ef;color:#a32e27;border:1px solid #f3d5d2}
+.layer-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.layer-stat-card{padding:19px;background:#fff;border:1px solid #e5e9e2;border-radius:12px;display:flex;flex-direction:column;gap:5px}
+.layer-stat-label{font-size:11px;font-weight:700;color:#6f796f}
+.layer-stat-card strong{font-family:Manrope,sans-serif;font-size:27px;color:#19231b}
+.layer-stat-card small{font-size:10px;color:#8a938a}
+.layer-panel,.layer-form-panel{background:#fff;border:1px solid #e4e9e1;border-radius:13px;overflow:hidden}
+.layer-panel-heading,.layer-form-heading{display:flex;align-items:center;justify-content:space-between;padding:21px 23px;border-bottom:1px solid #edf0eb;gap:15px}
+.layer-panel-heading h2,.layer-form-heading h2{font-family:Manrope,sans-serif;font-size:16px;margin:0;color:#1b251d}
+.layer-panel-heading p,.layer-form-heading p{font-size:11px;color:#7b857c;margin:5px 0 0}
+.layer-total{background:#f0f4ef;color:#41654a;border-radius:20px;padding:7px 11px;font-size:10px;font-weight:800}
+.layer-table-wrap{overflow-x:auto}
+.layer-table{width:100%;border-collapse:collapse;min-width:850px}
+.layer-table th{text-align:left;background:#f8f9f6;color:#778177;font-size:9px;letter-spacing:.07em;text-transform:uppercase;padding:13px 15px;white-space:nowrap}
+.layer-table td{padding:15px;border-top:1px solid #edf0eb;font-size:11px;color:#354137;vertical-align:middle}
+.layer-name-cell{display:flex;flex-direction:column;gap:4px}
+.layer-name-cell strong{font-size:12px;color:#202a22}
+.layer-name-cell small,.layer-object-label{font-size:9px;color:#929b92}
+.layer-type{background:#f1f4ef;border-radius:6px;padding:6px 8px;font-size:10px;font-weight:700}
+.layer-color{display:flex;align-items:center;gap:7px;font-size:10px}
+.layer-color i{width:15px;height:15px;border-radius:4px;border:1px solid #dce2d9}
+.layer-status,.layer-access{display:inline-block;border-radius:20px;padding:6px 9px;font-size:9px;font-weight:800;white-space:nowrap}
+.status-published{background:#e7f4e9;color:#26713c}
+.status-draft{background:#fff4dd;color:#946514}
+.status-archived{background:#f0eeee;color:#777}
+.access-public{background:#e7f3eb;color:#246a3c}
+.access-internal{background:#f0f1ef;color:#69736b}
+.layer-actions{display:flex;align-items:center;gap:7px}
+.layer-actions form{margin:0}
+.layer-edit-btn,.layer-archive-btn{border:0;border-radius:6px;padding:7px 10px;font-size:10px;font-weight:800;cursor:pointer;text-decoration:none}
+.layer-edit-btn{background:#edf4ee;color:#25643a}
+.layer-archive-btn{background:#fff0ee;color:#a43a31}
+.layer-empty{text-align:center!important;padding:35px!important;color:#818a82!important}
+.layer-pagination{padding:15px 20px;border-top:1px solid #edf0eb}
+.layer-information,.layer-privacy-note,.layer-notice{background:#f3f6f1;border:1px solid #e2e9df;border-radius:10px;padding:15px 18px}
+.layer-information strong,.layer-privacy-note strong,.layer-notice strong{font-size:11px;color:#31583a}
+.layer-information p,.layer-privacy-note p,.layer-notice p{font-size:10px;line-height:1.8;color:#68756a;margin:6px 0 0}
+.layer-form-panel form{padding:23px}
+.layer-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:19px}
+.layer-field{display:flex;flex-direction:column;gap:8px;font-size:11px;font-weight:700;color:#465248}
+.layer-field-full{grid-column:1/-1}
+.layer-field b{color:#bd4035}
+.layer-field input:not([type=checkbox]):not([type=color]),.layer-field textarea,.layer-field select{width:100%;border:1px solid #dfe5dc;border-radius:8px;background:#fff;padding:11px 12px;font-size:12px;color:#253027;outline:none}
+.layer-field input:focus,.layer-field textarea:focus,.layer-field select:focus{border-color:#438456;box-shadow:0 0 0 3px rgba(67,132,86,.1)}
+.layer-field textarea{resize:vertical;min-height:95px}
+.layer-field small{font-size:10px;font-weight:400;color:#8a938a}
+.layer-color-input{display:flex;align-items:center;gap:12px}
+.layer-color-input input[type=color]{width:52px;height:42px;border:1px solid #dfe5dc;border-radius:8px;background:white;padding:4px;cursor:pointer}
+.layer-color-input input[type=text]{max-width:180px}
+.layer-checkbox{display:flex;align-items:center;gap:9px;min-height:42px;font-size:11px;font-weight:600;color:#455248}
+.layer-checkbox input{width:16px;height:16px;accent-color:#1e6b3c}
+.layer-privacy-note{margin-top:20px}
+.layer-form-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:24px;padding-top:19px;border-top:1px solid #edf0eb}
+@media(max-width:850px){.layer-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.layer-heading{align-items:flex-start;flex-direction:column}.layer-heading h1{font-size:25px}.layer-stat-grid{gap:9px}.layer-stat-card{padding:14px}.layer-form-grid{grid-template-columns:1fr}.layer-field-full{grid-column:auto}.layer-form-panel form{padding:16px}.layer-panel-heading,.layer-form-heading{padding:16px}.layer-form-actions{flex-wrap:wrap}.layer-form-actions>*{flex:1}}

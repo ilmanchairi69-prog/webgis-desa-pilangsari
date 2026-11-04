@@ -1,0 +1,60 @@
+.village-portal { --portal-forest: #123c31; --portal-deep: #0c3026; --portal-sage: #eaf2e5; --portal-cream: #f7f8f2; --portal-gold: #e6d6a4; --portal-border: #dce7d8; --portal-text: #183629; --portal-muted: #52665a; color: var(--portal-text); background: #fbfcf8; }
+.village-portal .portal-container { width: min(1200px, calc(100% - 64px)); }
+.village-portal .portal-header { box-shadow: 0 4px 18px #0c30260a; }
+.village-portal .portal-topbar { background: var(--portal-deep); }
+.village-portal .portal-navigation > a:not(.portal-button) { font-size: 13px; }
+.village-portal .portal-brand strong { letter-spacing: .045em; }
+.village-portal .portal-hero { min-height: 620px; }
+.village-portal .portal-hero::before { background: linear-gradient(90deg, #0a3029f5 0%, #103a2edb 52%, #143c2e75 100%); }
+.village-portal .portal-hero h1 { font-size: clamp(42px, 5.2vw, 72px); line-height: 1.08; letter-spacing: -.045em; }
+.village-portal .portal-hero-description { font-size: 16px; max-width: 540px; }
+.village-portal .portal-hero-location { font-size: 16px; }
+.village-portal .portal-button { border-radius: 12px; min-height: 48px; font-size: 13px; transition: transform .18s, background .18s, box-shadow .18s; }
+.village-portal .portal-button:hover { transform: translateY(-2px); }
+.village-portal .portal-button:focus-visible, .village-portal a:focus-visible, .village-portal button:focus-visible { outline: 3px solid #b59441; outline-offset: 3px; }
+.village-portal .portal-summary { background: var(--portal-deep); }
+.village-portal .portal-summary-grid { gap: 0; }
+.village-portal .portal-summary-grid > div { padding-block: 23px; }
+.village-portal .portal-section { padding-block: clamp(56px, 7vw, 92px); }
+.village-portal .portal-section-cream { background: #edf3e8; }
+.village-portal .portal-section-soft { background: #f3f7ef; }
+.village-portal .portal-eyebrow { color: #4d7352; font-size: 11px; letter-spacing: .14em; }
+.village-portal .portal-section-title h2, .village-portal .portal-section-heading h2, .village-portal .village-copy h2, .village-portal .portal-government-intro h2 { font-size: clamp(28px, 3vw, 41px); line-height: 1.2; letter-spacing: -.035em; }
+.village-portal .portal-section-title p, .village-portal .portal-section-heading p, .village-portal .portal-government-intro p { font-size: 15px; line-height: 1.8; color: #52665a; }
+.village-portal .portal-quick-card, .village-portal .portal-guide-card, .village-portal .village-card, .village-portal .portal-map-notes > div { border: 1px solid var(--portal-border); border-radius: 20px; box-shadow: 0 12px 35px #0c302609; }
+.village-portal .portal-quick-card, .village-portal .portal-guide-card { padding: 28px; transition: transform .2s, box-shadow .2s; }
+.village-portal .portal-quick-card:hover, .village-portal .portal-guide-card:hover { transform: translateY(-4px); box-shadow: 0 16px 38px #0c302617; }
+.village-portal .portal-quick-card h2, .village-portal .portal-guide-card h3 { font-size: 18px; line-height: 1.35; }
+.village-portal .portal-quick-card p, .village-portal .portal-guide-card p, .village-portal .portal-profile-copy p { font-size: 14px; line-height: 1.75; color: #52665a; }
+.village-portal .portal-profile-card { border-radius: 24px; overflow: hidden; }
+.village-portal .portal-profile-copy { padding: clamp(26px, 4vw, 52px); }
+.village-portal .portal-profile-copy h3, .village-portal .portal-profile-copy h2 { font-size: clamp(25px, 3vw, 36px); line-height: 1.2; }
+.village-portal .portal-map-heading { padding-block: 32px 64px; background: linear-gradient(125deg, #0d3329, #275843); }
+.village-portal .portal-map-heading h1 { font-size: clamp(38px, 4.5vw, 58px); line-height: 1.12; }
+.village-portal .portal-map-heading p { color: #e0e9df; font-size: 15px; line-height: 1.75; max-width: 720px; }
+.village-portal .portal-map-heading .portal-eyebrow, .village-portal .portal-map-heading h1 em { color: #e6d6a4; }
+.village-portal .portal-map-workspace { border-radius: 20px; box-shadow: 0 18px 44px #123c3110; }
+.village-portal .map-toolbar label, .village-portal .map-filters, .village-portal .map-legend, .village-portal .portal-map-notes p { font-size: 13px; }
+.village-portal .portal-government-intro { display: grid; grid-template-columns: 1.4fr 1fr; align-items: center; gap: clamp(30px, 6vw, 80px); }
+.village-portal .portal-government-intro h2 { margin: 12px 0 16px; max-width: 670px; }
+.village-portal .portal-government-intro p { max-width: 650px; }
+.village-portal .portal-government-intro .portal-button { margin-top: 12px; }
+.village-portal .portal-government-fact { padding: clamp(28px, 4vw, 48px); border: 1px solid #d9e7d3; border-radius: 24px; background: linear-gradient(140deg, #fff, #e8f1e2); }
+.village-portal .portal-government-fact span { display: block; color: #5b795a; font-size: 11px; letter-spacing: .13em; font-weight: 700; }
+.village-portal .portal-government-fact strong { display: block; margin-top: 18px; color: #1a4a35; font-size: clamp(30px, 4vw, 45px); line-height: 1.1; }
+.village-portal .portal-government-fact p { margin-bottom: 0; }
+.village-portal .portal-footer { background: #0b3026; }
+.village-portal .portal-footer-grid > div > a:not(.portal-brand), .village-portal .portal-footer-grid > div > p, .village-portal .portal-footer-identity p { font-size: 13px; line-height: 1.7; }
+.village-portal .village-copy > p, .village-portal .village-card p { line-height: 1.8; }
+@media (max-width: 960px) { .village-portal .portal-government-intro { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 700px) { .village-portal .portal-container { width: calc(100% - 36px); } .village-portal .portal-hero { min-height: 540px; } .village-portal .portal-hero h1 { font-size: clamp(38px, 10vw, 52px); } .village-portal .portal-hero-description, .village-portal .portal-hero-location { font-size: 14px; } .village-portal .portal-government-intro { grid-template-columns: 1fr; gap: 25px; } .village-portal .portal-map-heading { padding-block: 25px 42px; } .village-portal .portal-map-heading p { font-size: 14px; } .village-portal .portal-quick-card, .village-portal .portal-guide-card { padding: 22px; } }
+@media (prefers-reduced-motion: reduce) { .village-portal .portal-button, .village-portal .portal-quick-card, .village-portal .portal-guide-card { transition: none; } }
+
+.village-portal .portal-hero-layout { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: clamp(36px, 5vw, 80px); }
+.village-portal .portal-hero-feature { margin: 0; padding: 12px; background: #fff; color: #173c2c; border-radius: 24px; box-shadow: 0 22px 60px #071b1450; }
+.village-portal .portal-hero-feature img { display: block; width: 100%; aspect-ratio: 1.45; object-fit: cover; border-radius: 15px; }
+.village-portal .portal-hero-feature figcaption { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px 12px; padding: 16px 8px 8px; }
+.village-portal .portal-hero-feature figcaption strong { width: 100%; font-size: 16px; }
+.village-portal .portal-hero-feature figcaption span, .village-portal .portal-hero-feature figcaption small { color: #5d7162; font-size: 12px; }
+.village-portal .portal-hero-feature figcaption small { margin-left: auto; }
+@media (max-width: 800px) { .village-portal .portal-hero-layout { grid-template-columns: 1fr; gap: 32px; } .village-portal .portal-hero-feature { max-width: 560px; } .village-portal .portal-hero-feature img { aspect-ratio: 1.8; } }

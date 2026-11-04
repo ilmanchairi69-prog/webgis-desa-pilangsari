@@ -1,0 +1,93 @@
+
+# ==========================================
+# OS / SYSTEM
+# ==========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# LOGS
+# ==========================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ==========================================
+# ENVIRONMENT / SECRETS
+# ==========================================
+.env
+.env.*
+!.env.example
+.env.backup
+.env.backup*
+.env.production
+
+# Credentials
+/auth.json
+*.pem
+*.key
+
+# ==========================================
+# BACKUPS
+# ==========================================
+*.backup*
+*.bak*
+*.before-*
+/backups/
+/BACKUP-*/
+
+# ==========================================
+# PHP / LARAVEL
+# ==========================================
+/vendor
+.phpunit.result.cache
+.phpunit.cache
+.phpactor.json
+_ide_helper.php
+Homestead.json
+Homestead.yaml
+
+# Laravel runtime files
+/storage/*.key
+/storage/pail
+/public/storage
+/bootstrap/cache/*.php
+
+# ==========================================
+# NODE / FRONTEND
+# ==========================================
+/node_modules
+/public/build
+/public/hot
+/public/fonts-manifest.dev.json
+npm-cache/
+.eslintcache
+
+# ==========================================
+# IDE / EDITOR
+# ==========================================
+/.idea
+/.nova
+/.vscode
+/.zed
+/.cursor/
+/.codex
+*.swp
+*.swo
+
+# ==========================================
+# TEST / COVERAGE
+# ==========================================
+/coverage
+/.nyc_output
+/phpunit-cache
+
+# ==========================================
+# TEMPORARY FILES
+# ==========================================
+*.tmp
+*.temp
+*.orig
+*.rej

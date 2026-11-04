@@ -1,0 +1,473 @@
+.village-portal {
+    --portal-yellow: #facc15;
+    --portal-ink: #141414;
+    --portal-muted: #62666d;
+    --portal-border: #e5e7eb;
+    background: #fff;
+    color: var(--portal-ink);
+    font-family: Inter, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Public portal aligned with the active Admin design system. */
+.village-portal {
+    --portal-yellow: #e6d6a4;
+    --portal-ink: #294331;
+    --portal-muted: #75846d;
+    --portal-border: #dfe8d7;
+    background: #f3f6f3;
+    color: var(--portal-ink);
+    font-family: 'DM Sans', Arial, sans-serif;
+}
+.village-portal :is(h1, h2, h3) { font-family: Manrope, 'DM Sans', Arial, sans-serif; }
+.village-portal :is(a, button, summary, input):focus-visible { outline-color: #769464; }
+.village-portal .portal-topbar { background: #0f352c; color: #d7e2d0; }
+.village-portal .portal-topbar .portal-icon { color: #d8ca96; }
+.village-portal .portal-header { background: #fbfcf9; border-color: #dfe8d7; box-shadow: 0 8px 24px #29492608; }
+.village-portal .portal-brand small { color: #829078; }
+.village-portal .portal-navigation > a:not(.portal-button),
+.village-portal .portal-dropdown summary { border-radius: 11px; color: #58704e; }
+.village-portal .portal-navigation > a[aria-current],
+.village-portal .portal-navigation > a:not(.portal-button):hover,
+.village-portal .portal-dropdown[open] summary { color: #294f35; background: #edf3e6; border-color: #d8e4cf; }
+.village-portal .portal-dropdown-panel { border-color: #dfe8d7; border-radius: 14px; box-shadow: 0 18px 45px #17341e14; }
+.village-portal .portal-dropdown-panel a { border-radius: 9px; }
+.village-portal .portal-dropdown-panel a:hover { background: #edf3e6; }
+.village-portal .portal-button { border-radius: 11px; }
+.village-portal .portal-button-yellow { color: #294331; background: #e6d6a4; }
+.village-portal .portal-button-yellow:hover { background: #eee2bd; }
+.village-portal .portal-button-dark { background: #194e38; }
+.village-portal .portal-button-dark:hover { background: #276148; }
+.village-portal .portal-menu-toggle { color: #294331; background: #f3f6ef; border-color: #dce6d4; border-radius: 11px; }
+.village-portal .portal-hero { background: #123c31; }
+.village-portal .portal-hero::before { background: linear-gradient(90deg, #0d3029f5 0%, #123c31df 52%, #123c3185 100%); }
+.village-portal .portal-hero-eyebrow { color: #e9dfbb; border-color: #e6d6a452; background: #e6d6a415; border-radius: 999px; }
+.village-portal .portal-hero-eyebrow > span { background: #e6d6a4; }
+.village-portal .portal-hero h1 em { color: #e6d6a4; }
+.village-portal .portal-summary { background: #123c31; }
+.village-portal .portal-summary-grid strong { color: #e6d6a4; }
+.village-portal .portal-quick-card,
+.village-portal .portal-profile-card,
+.village-portal .portal-guide-card,
+.village-portal .portal-map-workspace,
+.village-portal .portal-map-notes > div { border-color: #dfe8d7; border-radius: 18px; box-shadow: 0 7px 24px #29492608; }
+.village-portal .portal-quick-card { background: #fff; }
+.village-portal .portal-quick-card:hover { box-shadow: 0 16px 38px #29492612; }
+.village-portal .tile-yellow { background: #f5edcf; color: #826d2d; }
+.village-portal .tile-red { background: #f3ebe3; color: #8b6754; }
+.village-portal .tile-blue { background: #e9f0e6; color: #4f744c; }
+.village-portal .tile-green { background: #e3eee0; color: #387547; }
+.village-portal .portal-section-cream { background: #eef3e8; }
+.village-portal .portal-section-soft { background: #f7f9f4; }
+.village-portal .portal-section-title h2::after { background: #c5cf90; }
+.village-portal .portal-eyebrow { color: #6d8a58; }
+.village-portal .portal-profile-card { border-color: #dce6d1; }
+.village-portal .portal-profile-facts { border-color: #e2e9dc; }
+.village-portal .portal-text-link:hover { color: #387547; }
+.village-portal .map-search input { border-color: #dce6d4; border-radius: 11px; background: #fbfcf9; color: #364f2d; }
+.village-portal .map-search button { border-radius: 11px; color: #fff; background: #194e38; }
+.village-portal .map-filters [data-public-category] { border-color: #dce6d4; border-radius: 999px; color: #58704e; }
+.village-portal .map-filters [data-public-category][aria-pressed=true] { border-color: #b9cfaa; background: #edf3e6; color: #294f35; }
+.village-portal .public-map { border-color: #dce6d4; border-radius: 14px; }
+.village-portal .portal-privacy { background: #123c31; }
+.village-portal .portal-privacy-icon { color: #e6d6a4; border-color: #e6d6a459; border-radius: 16px; }
+.village-portal .portal-privacy .portal-eyebrow { color: #d9cc9d; }
+.village-portal .portal-footer { background: #0f352c; border-top-color: #c5cf90; }
+.village-portal .portal-footer h2 { color: #e6d6a4; }
+.village-portal .portal-map-heading { background: #123c31; }
+.village-portal .portal-map-heading .portal-eyebrow,
+.village-portal .portal-map-heading h1 em { color: #e6d6a4; }
+.village-portal .portal-map-notes > div > .portal-icon { color: #6d8a58; }
+.village-portal .public-admin-access {
+    position: fixed;
+    right: max(22px, env(safe-area-inset-right));
+    bottom: max(22px, env(safe-area-inset-bottom));
+    z-index: 1050;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 12px 18px;
+    border: 1px solid #ffffff2e;
+    border-radius: 999px;
+    background: #123c31;
+    color: #fff;
+    box-shadow: 0 12px 32px #102a1d40;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    transition: transform .18s, background .18s;
+}
+.village-portal .public-admin-access:hover { transform: translateY(-2px); background: #1b5036; }
+.village-portal .public-admin-access:active { transform: translateY(0); }
+.village-portal .public-admin-access .portal-icon { width: 18px; height: 18px; }
+.village-portal .publication-category-readonly h2 { margin: 0 0 10px; font-size: 20px; color: #385831; }
+@media (max-width: 960px) {
+    .village-portal .portal-navigation { background: #fbfcf9; border-color: #dfe8d7; }
+}
+@media (max-width: 600px) {
+    .village-portal .portal-hero::before { background: linear-gradient(90deg, #0d3029ed, #123c31ad); }
+    .village-portal .public-admin-access {
+        right: max(14px, env(safe-area-inset-right));
+        bottom: max(14px, env(safe-area-inset-bottom));
+        min-height: 46px;
+        padding: 11px 15px;
+        font-size: 11px;
+    }
+    .village-portal .portal-footer-bottom { padding-bottom: 78px; }
+}
+.village-portal .portal-container { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
+.village-portal :is(h1, h2, h3) { font-family: Poppins, Inter, Arial, sans-serif; font-weight: 700; letter-spacing: -.035em; line-height: 1.3; }
+.village-portal :is(a, button, summary, input):focus-visible { outline: 3px solid #2563eb; outline-offset: 4px; }
+.village-portal :is(section[id], main[id]) { scroll-margin-top: 116px; }
+.village-portal .portal-icon { display: inline-block; width: 20px; height: 20px; flex-shrink: 0; vertical-align: middle; }
+.village-portal .portal-topbar { background: #181818; color: #d4d4d4; font-size: 10px; letter-spacing: .015em; }
+.village-portal .portal-topbar .portal-container { display: flex; justify-content: space-between; gap: 20px; padding-block: 8px; }
+.village-portal .portal-topbar span { display: inline-flex; align-items: center; gap: 7px; }
+.village-portal .portal-topbar .portal-icon { color: var(--portal-yellow); width: 13px; height: 13px; }
+.village-portal .portal-header { position: sticky; top: 0; z-index: 1100; background: #fff; border-bottom: 1px solid var(--portal-border); box-shadow: 0 3px 15px #00000004; }
+.village-portal .portal-header-inner { min-height: 92px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.village-portal .portal-brand { display: inline-flex; align-items: center; gap: 13px; flex-shrink: 0; line-height: 1.4; }
+.village-portal .portal-brand img { width: 42px; height: 55px; object-fit: contain; }
+.village-portal .portal-brand strong { display: block; font-family: Poppins, Arial, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .01em; }
+.village-portal .portal-brand b { display: block; font-size: 19px; letter-spacing: .035em; }
+.village-portal .portal-brand small { display: block; margin-top: 3px; color: #62666d; font-size: 8px; letter-spacing: .075em; }
+.village-portal .portal-navigation { display: flex; align-items: center; gap: 6px; }
+.village-portal .portal-navigation > a:not(.portal-button), .village-portal .portal-dropdown summary { display: flex; align-items: center; justify-content: space-between; gap: 7px; padding: 10px 14px; font-size: 12px; font-weight: 600; border: 1px solid transparent; border-radius: 5px; cursor: pointer; white-space: nowrap; }
+.village-portal .portal-navigation > a[aria-current], .village-portal .portal-navigation > a:not(.portal-button):hover, .village-portal .portal-dropdown[open] summary { color: #614400; background: #fffbeb; border-color: #f6e4a1; }
+.village-portal .portal-dropdown { position: relative; }
+.village-portal .portal-dropdown summary { list-style: none; }
+.village-portal .portal-dropdown summary::-webkit-details-marker { display: none; }
+.village-portal .portal-dropdown summary .portal-icon { width: 13px; height: 13px; transition: transform .18s; }
+.village-portal .portal-dropdown[open] summary .portal-icon { transform: rotate(180deg); }
+.village-portal .portal-dropdown-panel { position: absolute; left: 0; top: calc(100% + 9px); width: 210px; padding: 7px; background: #fff; border: 1px solid var(--portal-border); border-radius: 7px; box-shadow: 0 12px 30px #00000015; }
+.village-portal .portal-dropdown-panel a { display: block; padding: 11px; border-radius: 4px; font-size: 12px; }
+.village-portal .portal-dropdown-panel a:hover { background: #fffbeb; }
+.village-portal .portal-button { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 46px; padding: 12px 21px; border: 1px solid transparent; border-radius: 5px; font-size: 12px; line-height: 1.4; font-weight: 700; transition: background .18s, transform .18s; text-align: center; }
+.village-portal .portal-button:hover { transform: translateY(-2px); }
+.village-portal .portal-button .portal-icon { width: 18px; height: 18px; }
+.village-portal .portal-button-yellow { color: #191600; background: var(--portal-yellow); }
+.village-portal .portal-button-yellow:hover { background: #fddd4c; }
+.village-portal .portal-button-outline { color: #fff; border-color: #ffffff70; background: #ffffff08; }
+.village-portal .portal-button-outline:hover { background: #ffffff18; }
+.village-portal .portal-button-dark { color: #fff; background: #181818; }
+.village-portal .portal-button-dark:hover { background: #363636; }
+.village-portal .portal-nav-cta { margin-left: 13px; min-height: 42px; padding: 11px 15px; font-size: 11px; }
+.village-portal .portal-menu-toggle { display: none; align-items: center; gap: 7px; min-height: 44px; padding: 10px 12px; color: #222; background: #fafafa; border: 1px solid #e5e7eb; border-radius: 5px; font-size: 12px; }
+.village-portal .portal-hero { position: relative; isolation: isolate; display: flex; align-items: center; min-height: 590px; background: #151c17; color: #fff; }
+.village-portal .portal-hero-image { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center 58%; }
+.village-portal .portal-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #101510eb 0%, #101510b8 52%, #10151075 100%); }
+.village-portal .portal-hero-content { padding-block: 76px 88px; }
+.village-portal .portal-eyebrow { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .15em; color: #a02d25; text-transform: uppercase; }
+.village-portal .portal-hero-eyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 7px 12px; border: 1px solid #facc1547; border-radius: 4px; background: #facc1512; color: #fde57c; font-size: 9px; letter-spacing: .12em; }
+.village-portal .portal-hero-eyebrow > span { width: 6px; height: 6px; border-radius: 50%; background: var(--portal-yellow); }
+.village-portal .portal-hero h1 { font-size: clamp(40px, 4.3vw, 62px); line-height: 1.15; margin: 23px 0 18px; font-weight: 700; letter-spacing: -.04em; }
+.village-portal .portal-hero h1 em { color: var(--portal-yellow); font-style: normal; }
+.village-portal .portal-hero-location { font-size: 15px; font-weight: 500; margin: 0 0 17px; color: #f1f1f1; }
+.village-portal .portal-hero-description { max-width: 555px; margin: 0; font-size: 14px; line-height: 1.9; color: #d5d9d6; }
+.village-portal .portal-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 29px; }
+.village-portal .portal-image-credit { position: absolute; right: 18px; bottom: 13px; font-size: 9px; color: #dedede; }
+.village-portal .portal-summary { background: #181818; color: #fff; border-top: 1px solid #ffffff15; }
+.village-portal .portal-summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-block: 30px; }
+.village-portal .portal-summary-grid > div { padding: 0 24px; text-align: center; border-right: 1px solid #ffffff22; }
+.village-portal .portal-summary-grid > div:last-child { border-right: 0; }
+.village-portal .portal-summary-grid strong { display: block; color: var(--portal-yellow); font-family: Poppins, Arial, sans-serif; font-size: 30px; font-weight: 700; line-height: 1.3; }
+.village-portal .portal-summary-grid span { display: block; color: #ccc; font-size: 11px; margin-top: 6px; }
+.village-portal .portal-section { padding-block: 84px; }
+.village-portal .portal-quick-section { padding-block: 50px; }
+.village-portal .portal-quick-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+.village-portal .portal-quick-card { min-width: 0; padding: 25px 23px; border: 1px solid #eceef0; border-radius: 8px; background: #fafafa; transition: transform .2s, box-shadow .2s; }
+.village-portal .portal-quick-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px #00000009; }
+.village-portal .portal-icon-tile { display: inline-flex; justify-content: center; align-items: center; width: 43px; height: 43px; border-radius: 8px; }
+.village-portal .portal-icon-tile .portal-icon { width: 23px; height: 23px; }
+.village-portal .tile-yellow { background: #fff3bc; color: #916300; }
+.village-portal .tile-red { background: #fee7e4; color: #b8362a; }
+.village-portal .tile-blue { background: #e6efff; color: #2863ba; }
+.village-portal .tile-green { background: #e2f4e9; color: #247343; }
+.village-portal .portal-quick-card h2 { margin: 17px 0 8px; font-size: 16px; }
+.village-portal .portal-quick-card p { color: var(--portal-muted); font-size: 12px; margin: 0 0 17px; line-height: 1.8; }
+.village-portal .portal-card-link { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 11px; font-weight: 600; }
+.village-portal .portal-card-link .portal-icon { width: 16px; height: 16px; }
+.village-portal .portal-section-cream { background: #fffcf1; }
+.village-portal .portal-section-soft { background: #f8f9fb; }
+.village-portal .portal-section-title { text-align: center; max-width: 680px; margin: 0 auto 39px; }
+.village-portal .portal-section-title h2, .village-portal .portal-section-heading h2 { margin: 10px 0 12px; font-size: clamp(26px, 2.5vw, 34px); }
+.village-portal .portal-section-title h2::after { content: ''; display: block; width: 55px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #b7352c, #facc15); margin: 19px auto 18px; }
+.village-portal .portal-section-title p, .village-portal .portal-section-heading p { color: var(--portal-muted); font-size: 13px; margin: 0; }
+.village-portal .portal-profile-card { display: grid; grid-template-columns: 1fr 1.05fr; background: #fff; box-shadow: 0 6px 35px #6245190a; border: 1px solid #eee9d9; border-radius: 12px; overflow: hidden; }
+.village-portal .portal-profile-card figure { margin: 0; position: relative; min-height: 440px; }
+.village-portal .portal-profile-card figure img { position: absolute; width: 100%; height: 100%; object-fit: cover; }
+.village-portal .portal-profile-card figcaption { position: absolute; bottom: 0; width: 100%; padding: 26px 15px 12px; background: linear-gradient(transparent, #0009); font-size: 9px; color: #fff; }
+.village-portal .portal-profile-copy { padding: 42px; }
+.village-portal .portal-profile-copy h3 { font-size: 27px; margin: 11px 0 19px; }
+.village-portal .portal-profile-copy p { color: var(--portal-muted); font-size: 12px; margin: 0 0 15px; line-height: 1.9; }
+.village-portal .portal-profile-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 24px 0; padding: 18px 0; border-block: 1px solid #eee; gap: 12px; }
+.village-portal .portal-profile-facts dt { font-size: 10px; color: #666; }
+.village-portal .portal-profile-facts dd { font-size: 12px; font-weight: 600; margin: 3px 0 0; }
+.village-portal .portal-text-link { display: inline-flex; align-items: center; gap: 12px; min-height: 32px; font-size: 12px; font-weight: 600; }
+.village-portal .portal-text-link:hover { color: #8b6311; }
+.village-portal .portal-text-link .portal-icon { width: 17px; height: 17px; }
+.village-portal .portal-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
+.village-portal .portal-section-heading > div { max-width: 720px; }
+.village-portal .portal-section-heading .portal-button { flex-shrink: 0; }
+.village-portal .portal-map-workspace { min-width: 0; padding: 24px; border: 1px solid #e3e5e9; border-radius: 10px; background: #fff; box-shadow: 0 6px 25px #00000004; }
+.village-portal .map-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 25px; border-bottom: 1px solid #eee; padding: 0 0 20px; margin-bottom: 18px; }
+.village-portal .map-search { width: min(480px, 65%); }
+.village-portal .map-search label { display: block; font-size: 11px; color: #444; margin-bottom: 7px; }
+.village-portal .search-row { display: flex; gap: 8px; }
+.village-portal .map-search input { width: 100%; min-width: 0; min-height: 45px; border: 1px solid #dce0e5; padding: 11px 13px; border-radius: 5px; background: #f9fafb; color: #222; font-size: 12px; }
+.village-portal .map-search button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 45px; min-width: 83px; padding: 10px 13px; border: 0; border-radius: 5px; background: var(--portal-yellow); color: #242000; font-size: 12px; font-weight: 600; }
+.village-portal .map-search button .portal-icon { width: 16px; height: 16px; }
+.village-portal .map-count { position: relative; display: flex; flex-direction: column; align-items: flex-end; padding: 0 0 0 15px; gap: 3px; }
+.village-portal .map-count .count-dot { position: absolute; left: 0; top: 9px; width: 7px; height: 7px; background: #26764b; border-radius: 50%; }
+.village-portal .map-count strong { font-size: 17px; color: #222; letter-spacing: -.025em; }
+.village-portal .map-count small { font-size: 9px; color: #737373; }
+.village-portal .map-filters { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; margin-bottom: 18px; }
+.village-portal .map-filters [data-public-category] { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 9px 14px; border: 1px solid #d9dde2; border-radius: 5px; background: #fff; color: #333; font-size: 12px; font-weight: 500; }
+.village-portal .map-filters [data-public-category][aria-pressed=true] { background: #f6f8f6; border-color: #9baea0; color: #253b2a; }
+.village-portal .map-filters [data-public-category][aria-pressed=false] { opacity: 1; background: #fff; border-style: dashed; color: #6d6d6d; }
+.village-portal .map-filters label { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin-left: auto; font-size: 11px; color: #555; cursor: pointer; }
+.village-portal .map-filters input { accent-color: #257443; width: 16px; height: 16px; }
+.village-portal .public-map { height: 510px; position: relative; z-index: 0; border: 1px solid #e1e3e0; border-radius: 6px; background: #eef0eb; }
+.village-portal .legend-house { background: #1c7940; }
+.village-portal .legend-facility { background: #f0c900; }
+.village-portal .map-filters :is(.legend-house, .legend-facility) { width: 10px; height: 10px; flex-shrink: 0; box-shadow: 0 0 0 2px #fff; border-radius: 50%; }
+.village-portal .map-message { padding-top: 12px; font-size: 11px; color: #656565; line-height: 1.8; }
+.village-portal .map-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 23px; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; color: #666; font-size: 10px; }
+.village-portal .map-legend > span { display: inline-flex; align-items: center; gap: 7px; }
+.village-portal .map-legend .legend-note { margin-left: auto; }
+.village-portal .portal-map-disclaimer { color: #6a6a6a; font-size: 10px; line-height: 1.9; margin: 17px 0 0; }
+.village-portal .portal-guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.village-portal .portal-guide-card { position: relative; padding: 28px; background: #fff; border: 1px solid #e7e9ed; border-radius: 8px; }
+.village-portal .portal-guide-number { position: absolute; right: 24px; top: 21px; font-family: Poppins, Arial, sans-serif; font-size: 36px; font-weight: 600; color: #e7e9ee; }
+.village-portal .portal-guide-card h3 { font-size: 17px; margin: 23px 0 12px; }
+.village-portal .portal-guide-card p { font-size: 12px; color: var(--portal-muted); line-height: 1.9; margin-bottom: 18px; }
+.village-portal .portal-privacy { padding-block: 55px; color: #fff; background: #1b1b1b; }
+.village-portal .portal-privacy-inner { display: flex; align-items: center; gap: 27px; }
+.village-portal .portal-privacy-icon { display: grid; place-items: center; width: 66px; height: 66px; border: 1px solid #facc154d; border-radius: 12px; color: var(--portal-yellow); flex-shrink: 0; }
+.village-portal .portal-privacy-icon .portal-icon { width: 32px; height: 32px; }
+.village-portal .portal-privacy .portal-eyebrow { color: #ebd37a; font-size: 9px; }
+.village-portal .portal-privacy h2 { margin: 8px 0 12px; font-size: 27px; }
+.village-portal .portal-privacy p { max-width: 640px; font-size: 12px; color: #bcbcbc; margin: 0; }
+.village-portal .portal-privacy .portal-button { flex-shrink: 0; margin-left: auto; }
+.village-portal .portal-footer { background: #101010; color: #aaa; border-top: 2px solid #facc15; font-size: 12px; }
+.village-portal .portal-footer-grid { display: grid; grid-template-columns: 1.55fr 1fr 1fr 1.1fr; gap: 48px; padding-block: 55px 42px; }
+.village-portal .portal-footer .portal-brand { color: #fff; gap: 12px; }
+.village-portal .portal-footer .portal-brand strong { font-size: 12px; }
+.village-portal .portal-footer .portal-brand b { font-size: 18px; }
+.village-portal .portal-footer .portal-brand small { color: #aaa; font-size: 8px; }
+.village-portal .portal-footer-identity p { max-width: 290px; font-size: 11px; margin: 19px 0 0; line-height: 1.9; }
+.village-portal .portal-footer h2 { color: #e9cb5b; font-size: 13px; font-weight: 600; margin: 0 0 18px; letter-spacing: 0; }
+.village-portal .portal-footer-grid > div > a:not(.portal-brand) { display: block; min-height: 32px; padding-block: 4px; font-size: 11px; }
+.village-portal .portal-footer-grid > div > a:hover { color: #fff; }
+.village-portal .portal-footer-grid > div > p { font-size: 11px; margin: 0; line-height: 2; }
+.village-portal .portal-footer-grid .portal-footer-identity > p { margin-top: 18px; }
+.village-portal .portal-footer-bottom { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid #ffffff16; padding-block: 18px; font-size: 10px; }
+.village-portal .portal-map-heading { padding-block: 27px 42px; background: #1a1a1a; color: #fff; }
+.village-portal .portal-breadcrumb { display: block; color: #eee; font-size: 10px; margin-bottom: 27px; }
+.village-portal .portal-breadcrumb span { margin-left: 7px; color: #aaa; }
+.village-portal .portal-map-heading .portal-eyebrow { color: #e5cc6c; font-size: 9px; }
+.village-portal .portal-map-heading h1 { font-size: clamp(32px, 3.5vw, 45px); margin: 10px 0 12px; }
+.village-portal .portal-map-heading h1 em { color: var(--portal-yellow); font-style: normal; }
+.village-portal .portal-map-heading p { max-width: 650px; font-size: 12px; color: #c5c5c5; margin: 0; }
+.village-portal .portal-map-page { padding-block: 30px 50px; }
+.village-portal .portal-map-page .public-map { height: min(65vh, 620px); min-height: 420px; }
+.village-portal .portal-map-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+.village-portal .portal-map-notes > div { display: flex; gap: 16px; padding: 23px; border: 1px solid #e9eaec; border-radius: 8px; background: #fafafa; }
+.village-portal .portal-map-notes > div > .portal-icon { color: #8a690c; margin-top: 2px; }
+.village-portal .portal-map-notes h2 { font-size: 13px; margin: 0 0 7px; }
+.village-portal .portal-map-notes p { font-size: 11px; line-height: 1.9; color: var(--portal-muted); margin: 0; }
+@media (max-width: 1100px) {
+    .village-portal .portal-navigation > a:not(.portal-button), .village-portal .portal-dropdown summary { padding-inline: 10px; }
+    .village-portal .portal-nav-cta { margin-left: 4px; }
+    .village-portal .portal-quick-grid { gap: 16px; }
+    .village-portal .portal-quick-card { padding: 22px 18px; }
+    .village-portal .portal-profile-copy { padding: 32px; }
+    .village-portal .portal-footer-grid { gap: 27px; }
+}
+@media (max-width: 960px) {
+    .village-portal .portal-header-inner { min-height: 84px; }
+    .village-portal .portal-menu-toggle { display: inline-flex; }
+    .village-portal .portal-navigation { display: none; position: absolute; left: 0; right: 0; top: 100%; max-height: calc(100dvh - 90px); overflow-y: auto; flex-direction: column; align-items: stretch; padding: 16px 32px 24px; background: #fff; border-bottom: 1px solid #ddd; box-shadow: 0 15px 25px #00000012; }
+    .village-portal .portal-navigation.is-open { display: flex; }
+    .village-portal .portal-navigation > a:not(.portal-button), .village-portal .portal-dropdown summary { padding: 13px 14px; min-height: 46px; }
+    .village-portal .portal-dropdown-panel { position: static; width: auto; margin: 5px 0 8px; border: 0; border-left: 2px solid #facc15; border-radius: 0; box-shadow: none; padding: 0 8px; }
+    .village-portal .portal-nav-cta { margin: 6px 0 0; min-height: 46px; }
+    .village-portal .portal-hero { min-height: 540px; }
+    .village-portal .portal-quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .village-portal .portal-profile-card { grid-template-columns: 1fr; }
+    .village-portal .portal-profile-card figure { min-height: 330px; }
+    .village-portal .portal-profile-copy { padding: 35px; }
+    .village-portal .portal-guide-grid { gap: 15px; }
+    .village-portal .portal-guide-card { padding: 23px; }
+    .village-portal .portal-guide-card h3 { font-size: 16px; }
+    .village-portal .portal-privacy-inner { flex-wrap: wrap; gap: 20px; }
+    .village-portal .portal-privacy-inner > div { flex: 1; }
+    .village-portal .portal-privacy .portal-button { margin-left: 86px; }
+    .village-portal .portal-footer-grid { grid-template-columns: 1.3fr 1fr; gap: 35px 65px; }
+    .village-portal .map-filters label { margin-left: 0; }
+    .village-portal .public-map { height: 460px; }
+}
+@media (max-width: 600px) {
+    .village-portal .portal-container { width: calc(100% - 36px); }
+    .village-portal :is(section[id], main[id]) { scroll-margin-top: 98px; }
+    .village-portal .portal-topbar { font-size: 8px; }
+    .village-portal .portal-topbar .portal-container { padding-block: 7px; }
+    .village-portal .portal-topbar .portal-topbar-note { display: none; }
+    .village-portal .portal-brand { gap: 9px; }
+    .village-portal .portal-brand img { width: 34px; height: 45px; }
+    .village-portal .portal-brand strong { font-size: 9px; }
+    .village-portal .portal-brand b { font-size: 16px; }
+    .village-portal .portal-brand small { font-size: 6px; letter-spacing: .04em; }
+    .village-portal .portal-header-inner { min-height: 78px; gap: 10px; }
+    .village-portal .portal-menu-toggle { padding-inline: 10px; }
+    .village-portal .portal-menu-toggle span { display: none; }
+    .village-portal .portal-navigation { padding-inline: 18px; }
+    .village-portal .portal-hero { min-height: 560px; }
+    .village-portal .portal-hero-content { padding-block: 55px 65px; }
+    .village-portal .portal-hero::before { background: linear-gradient(90deg, #101510e6, #101510a3); }
+    .village-portal .portal-hero h1 { font-size: 39px; margin-top: 22px; }
+    .village-portal .portal-hero-eyebrow { font-size: 8px; letter-spacing: .08em; }
+    .village-portal .portal-hero-location { font-size: 12px; line-height: 1.8; }
+    .village-portal .portal-hero-description { font-size: 12px; line-height: 1.9; }
+    .village-portal .portal-actions { gap: 10px; }
+    .village-portal .portal-actions .portal-button { font-size: 11px; padding-inline: 14px; gap: 8px; }
+    .village-portal .portal-actions .portal-button .portal-icon { width: 16px; height: 16px; }
+    .village-portal .portal-image-credit { font-size: 8px; right: 18px; }
+    .village-portal .portal-summary-grid { grid-template-columns: 1fr 1fr; padding-block: 10px; }
+    .village-portal .portal-summary-grid > div { padding: 20px 10px; }
+    .village-portal .portal-summary-grid > div:nth-child(2) { border-right: 0; }
+    .village-portal .portal-summary-grid > div:nth-child(-n+2) { border-bottom: 1px solid #ffffff22; }
+    .village-portal .portal-summary-grid strong { font-size: 27px; }
+    .village-portal .portal-summary-grid span { font-size: 9px; }
+    .village-portal .portal-section { padding-block: 55px; }
+    .village-portal .portal-quick-section { padding-block: 30px; }
+    .village-portal .portal-quick-grid { gap: 12px; }
+    .village-portal .portal-quick-card { padding: 20px 15px; }
+    .village-portal .portal-quick-card h2 { font-size: 14px; }
+    .village-portal .portal-quick-card p { font-size: 11px; }
+    .village-portal .portal-card-link { font-size: 10px; }
+    .village-portal .portal-section-title { margin-bottom: 29px; }
+    .village-portal .portal-section-title h2, .village-portal .portal-section-heading h2 { font-size: 26px; }
+    .village-portal .portal-section-title p, .village-portal .portal-section-heading p { font-size: 12px; }
+    .village-portal .portal-profile-card figure { min-height: 245px; }
+    .village-portal .portal-profile-copy { padding: 25px 23px; }
+    .village-portal .portal-profile-copy h3 { font-size: 24px; }
+    .village-portal .portal-profile-facts { gap: 8px; }
+    .village-portal .portal-profile-facts dd { font-size: 11px; }
+    .village-portal .portal-section-heading { align-items: flex-start; flex-direction: column; gap: 21px; }
+    .village-portal .portal-map-workspace { padding: 15px; border-radius: 8px; }
+    .village-portal .map-toolbar { flex-direction: column; align-items: stretch; gap: 17px; }
+    .village-portal .map-search { width: 100%; }
+    .village-portal .map-search input { font-size: 11px; padding-inline: 10px; }
+    .village-portal .map-search button { min-width: 70px; padding-inline: 10px; }
+    .village-portal .map-count { align-items: flex-start; padding-left: 15px; }
+    .village-portal .map-count strong { font-size: 16px; }
+    .village-portal .map-count small { font-size: 9px; }
+    .village-portal .map-filters { gap: 8px; }
+    .village-portal .map-filters [data-public-category] { flex: 1; font-size: 10px; padding-inline: 9px; gap: 7px; white-space: nowrap; }
+    .village-portal .map-filters label { flex-basis: 100%; font-size: 10px; }
+    .village-portal .public-map { height: 395px; }
+    .village-portal .map-message { font-size: 10px; }
+    .village-portal .map-legend { font-size: 9px; gap: 10px 14px; }
+    .village-portal .map-legend .legend-note { flex-basis: 100%; margin-left: 0; }
+    .village-portal .portal-map-disclaimer { font-size: 9px; }
+    .village-portal .portal-guide-grid { grid-template-columns: 1fr; gap: 15px; }
+    .village-portal .portal-guide-card { padding: 26px; }
+    .village-portal .portal-guide-card h3 { font-size: 18px; }
+    .village-portal .portal-privacy { padding-block: 40px; }
+    .village-portal .portal-privacy-inner { display: block; }
+    .village-portal .portal-privacy-icon { width: 50px; height: 50px; margin-bottom: 22px; }
+    .village-portal .portal-privacy-icon .portal-icon { width: 27px; height: 27px; }
+    .village-portal .portal-privacy h2 { font-size: 25px; }
+    .village-portal .portal-privacy .portal-eyebrow { font-size: 8px; letter-spacing: .1em; }
+    .village-portal .portal-privacy .portal-button { margin: 25px 0 0; }
+    .village-portal .portal-footer-grid { grid-template-columns: 1fr 1fr; padding-block: 37px; gap: 30px 20px; }
+    .village-portal .portal-footer-identity { grid-column: 1 / -1; }
+    .village-portal .portal-footer-grid > div:last-child { grid-column: 1 / -1; }
+    .village-portal .portal-footer-grid > div > a:not(.portal-brand) { min-height: 38px; }
+    .village-portal .portal-footer-bottom { flex-direction: column; gap: 7px; font-size: 9px; }
+    .village-portal .portal-map-heading { padding-block: 22px 30px; }
+    .village-portal .portal-map-heading h1 { font-size: 33px; }
+    .village-portal .portal-map-heading p { font-size: 11px; line-height: 1.9; }
+    .village-portal .portal-map-page { padding-block: 20px 32px; }
+    .village-portal .portal-map-page .public-map { height: 450px; min-height: 0; }
+    .village-portal .portal-map-notes { grid-template-columns: 1fr; gap: 13px; margin-top: 19px; }
+    .village-portal .portal-map-notes > div { padding: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .village-portal *, .village-portal *::before, .village-portal *::after { transition: none !important; animation: none !important; }
+}
+
+/* Keep these final declarations after responsive portal rules. */
+.village-portal { background: #f3f6f3; color: #294331; font-family: 'DM Sans', Arial, sans-serif; }
+.village-portal :is(h1, h2, h3) { font-family: Manrope, 'DM Sans', Arial, sans-serif; }
+.village-portal .portal-topbar { background: #0f352c; color: #d7e2d0; }
+.village-portal .portal-header { background: #fbfcf9; border-color: #dfe8d7; box-shadow: 0 8px 24px #29492608; }
+.village-portal .portal-navigation > a:not(.portal-button), .village-portal .portal-dropdown summary { color: #58704e; border-radius: 11px; }
+.village-portal .portal-navigation > a[aria-current], .village-portal .portal-navigation > a:not(.portal-button):hover, .village-portal .portal-dropdown[open] summary { color: #294f35; background: #edf3e6; border-color: #d8e4cf; }
+.village-portal .portal-dropdown-panel { border-color: #dfe8d7; border-radius: 14px; box-shadow: 0 18px 45px #17341e14; }
+.village-portal .portal-button { border-radius: 11px; }
+.village-portal .portal-button-yellow { color: #294331; background: #e6d6a4; }
+.village-portal .portal-button-yellow:hover { background: #eee2bd; }
+.village-portal .portal-button-dark { background: #194e38; }
+.village-portal .portal-button-dark:hover { background: #276148; }
+.village-portal .portal-menu-toggle { color: #294331; background: #f3f6ef; border-color: #dce6d4; border-radius: 11px; }
+.village-portal .portal-hero { background: #123c31; }
+.village-portal .portal-hero::before { background: linear-gradient(90deg, #0d3029f5 0%, #123c31df 52%, #123c3185 100%); }
+.village-portal .portal-hero-eyebrow { color: #e9dfbb; border-color: #e6d6a452; background: #e6d6a415; border-radius: 999px; }
+.village-portal .portal-hero-eyebrow > span, .village-portal .portal-summary-grid strong { background-color: #e6d6a4; color: #294331; }
+.village-portal .portal-summary-grid strong { background-color: transparent; color: #e6d6a4; }
+.village-portal .portal-hero h1 em { color: #e6d6a4; }
+.village-portal .portal-summary, .village-portal .portal-map-heading, .village-portal .portal-privacy { background: #123c31; }
+.village-portal .portal-quick-card, .village-portal .portal-profile-card, .village-portal .portal-guide-card, .village-portal .portal-map-workspace, .village-portal .portal-map-notes > div { border-color: #dfe8d7; border-radius: 18px; box-shadow: 0 7px 24px #29492608; }
+.village-portal .portal-quick-card, .village-portal .portal-profile-card, .village-portal .portal-guide-card, .village-portal .portal-map-workspace { background: #fff; }
+.village-portal .portal-section-cream { background: #eef3e8; }
+.village-portal .portal-section-soft { background: #f7f9f4; }
+.village-portal .portal-eyebrow { color: #6d8a58; }
+.village-portal .portal-section-title h2::after { background: #c5cf90; }
+.village-portal .map-search input { border-color: #dce6d4; border-radius: 11px; background: #fbfcf9; color: #364f2d; }
+.village-portal .map-search button { border-radius: 11px; color: #fff; background: #194e38; }
+.village-portal .map-filters [data-public-category] { border-color: #dce6d4; border-radius: 999px; color: #58704e; }
+.village-portal .map-filters [data-public-category][aria-pressed=true] { border-color: #b9cfaa; background: #edf3e6; color: #294f35; }
+.village-portal .public-map { border-color: #dce6d4; border-radius: 14px; }
+.village-portal .portal-privacy-icon { color: #e6d6a4; border-color: #e6d6a459; border-radius: 16px; }
+.village-portal .portal-footer { background: #0f352c; border-top-color: #c5cf90; }
+.village-portal .portal-footer h2, .village-portal .portal-map-heading .portal-eyebrow, .village-portal .portal-map-heading h1 em { color: #e6d6a4; }
+@media (max-width: 960px) { .village-portal .portal-navigation { background: #fbfcf9; border-color: #dfe8d7; } }
+@media (max-width: 600px) {
+    .village-portal .portal-hero::before { background: linear-gradient(90deg, #0d3029ed, #123c31ad); }
+    .village-portal .portal-footer-bottom { padding-bottom: 78px; }
+}
+.village-portal .village-copy { max-width: 1000px; }
+.village-portal .village-copy > p { color: #52645a; line-height: 1.9; font-size: 16px; max-width: 850px; }
+.village-portal .village-copy h2 { margin: 12px 0 20px; }
+.village-portal .village-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 18px; }
+.village-portal .village-card { padding: 25px; background: #fff; border: 1px solid #dfe8d7; border-radius: 18px; box-shadow: 0 7px 24px #29492608; transition: transform .2s, box-shadow .2s; }
+.village-portal .village-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px #29492618; }
+.village-portal .village-card h3 { margin: 8px 0; font-size: 18px; }
+.village-portal .village-card p { margin: 8px 0 0; color: #52645a; font-size: 14px; line-height: 1.7; }
+.village-portal .village-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 30px; }
+.village-portal .village-stats div { padding: 18px; background: #f1f6ed; border-radius: 12px; }
+.village-portal .village-stats strong, .village-portal .village-stats span { display: block; }
+.village-portal .village-stats strong { color: #28563d; font-size: 28px; }
+.village-portal .village-stats span { font-size: 13px; }
+.village-portal .village-org { text-align: center; }
+.village-portal .village-org-leader { position: relative; max-width: 270px; margin: 0 auto 34px; padding: 18px; border-radius: 14px; background: #164735; color: white; }
+.village-portal .village-org-leader::after { content: ''; position: absolute; top: 100%; left: 50%; width: 2px; height: 34px; background: #a2b99c; }
+.village-portal .village-org-leader strong, .village-portal .village-org-leader span, .village-portal .village-org-branch strong, .village-portal .village-org-branch span { display: block; }
+.village-portal .village-org-leader span, .village-portal .village-org-branch span { margin-top: 5px; font-size: 14px; }
+.village-portal .village-org-branches { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; position: relative; }
+.village-portal .village-org-branches::before { content: ''; position: absolute; top: 0; left: 16.66%; right: 16.66%; height: 2px; background: #a2b99c; }
+.village-portal .village-org-branch { position: relative; padding-top: 20px; }
+.village-portal .village-org-branch::before { content: ''; position: absolute; top: 0; left: 50%; height: 20px; width: 2px; background: #a2b99c; }
+.village-portal .village-org-branch h3 { margin: 0; padding: 14px; color: #fff; background: #537956; border-radius: 12px; font-size: 16px; }
+.village-portal .village-org-branch > div { margin-top: 10px; padding: 15px; background: #fff; border: 1px solid #dfe8d7; border-radius: 12px; font-size: 14px; }
+.village-portal .village-person { display: flex; align-items: flex-start; gap: 15px; }
+.village-portal .village-person h3 { margin-top: 0; }
+.village-portal .village-person strong { color: #527357; font-size: 13px; }
+.village-portal .village-avatar { flex: 0 0 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; background: #e6efdf; color: #28563d; font-weight: 700; font-size: 20px; }
+@media (max-width: 700px) { .village-portal .village-org-branches { grid-template-columns: 1fr; gap: 0; } .village-portal .village-org-branches::before { left: 50%; right: auto; width: 2px; height: 100%; } .village-portal .village-org-branch { padding-top: 20px; } }
+@media (prefers-reduced-motion: reduce) { .village-portal .village-card { transition: none; } }
