@@ -65,7 +65,8 @@ class ReleaseSafetyTest extends TestCase
 
     public function test_sql_injection_search_input_does_not_bypass_rt_scope(): void
     {
-        $user = User::factory()->create(['role' => 'admin_rt', 'rt_code' => '01', 'is_active' => true]);
+        /** @var User $user */
+        $user = User::factory()->createOne(['role' => 'admin_rt', 'rt_code' => '01', 'is_active' => true]);
         House::create(['house_code' => 'BGN-SQA-PRIVATE-02', 'rt_code' => '02', 'address' => 'PRIVATE-OTHER-RT']);
         $this->actingAs($user)->get(route('admin.houses.index', ['q' => "%' OR 1=1 --"]))
             ->assertOk()->assertDontSee('BGN-SQA-PRIVATE-02')->assertDontSee('PRIVATE-OTHER-RT');

@@ -24,7 +24,10 @@ class ReleasePublicationTest extends TestCase
 
     private function admin(): User
     {
-        return User::factory()->create(['role' => 'super_admin', 'is_active' => true]);
+        /** @var User $admin */
+        $admin = User::factory()->createOne(['role' => 'super_admin', 'is_active' => true]);
+
+        return $admin;
     }
 
     private function payload(): array
@@ -158,7 +161,8 @@ class ReleasePublicationTest extends TestCase
     {
         $feature = $this->feature();
         $this->get(route('admin.layers.index'))->assertRedirect(route('login'));
-        $rt = User::factory()->create(['role' => 'admin_rt', 'is_active' => true, 'rt_code' => '01']);
+        /** @var User $rt */
+        $rt = User::factory()->createOne(['role' => 'admin_rt', 'is_active' => true, 'rt_code' => '01']);
         $this->actingAs($rt)->get(route('admin.layers.index'))->assertForbidden();
         $this->put(route('admin.layers.update', $feature->layer), [])->assertForbidden();
         $this->post(route('admin.facilities.publish', $this->facility()))->assertForbidden();
@@ -174,7 +178,8 @@ class ReleasePublicationTest extends TestCase
     {
         $feature = $this->feature();
         House::create(['map_feature_id' => $feature->id, 'house_code' => 'BGN-OTHER-LEGACY', 'created_by' => $this->admin()->id]);
-        $rt = User::factory()->create(['role' => 'admin_rt', 'is_active' => true, 'rt_code' => null]);
+        /** @var User $rt */
+        $rt = User::factory()->createOne(['role' => 'admin_rt', 'is_active' => true, 'rt_code' => null]);
         $this->actingAs($rt)->get(route('admin.dashboard'))->assertOk()->assertDontSee('BGN-OTHER-LEGACY')->assertViewHas('stats', fn (array $stats) => $stats['houses'] === 0);
     }
 
@@ -223,7 +228,8 @@ class ReleasePublicationTest extends TestCase
     {
         $layer = MapLayer::create(['name' => 'House storage', 'slug' => 'house-input-fixture', 'layer_type' => 'point']);
         $this->enablePublicationFixture('houses', $layer);
-        $rt = User::factory()->create(['role' => 'admin_rt', 'rt_code' => '01', 'is_active' => true]);
+        /** @var User $rt */
+        $rt = User::factory()->createOne(['role' => 'admin_rt', 'rt_code' => '01', 'is_active' => true]);
         $member = ['full_name' => 'Anggota Privat', 'relationship' => 'Anak', 'date_of_birth' => '2010-01-02', 'gender' => 'Perempuan'];
         $payload = ['address' => 'Alamat Privat', 'latitude' => -7.3574198, 'longitude' => 110.9874323, 'households' => [['head_of_family_name' => 'Kepala Privat', 'members' => [$member]]]];
         $this->actingAs($rt)->post(route('admin.houses.store'), $payload)->assertRedirect()->assertSessionHasNoErrors();
@@ -241,7 +247,8 @@ class ReleasePublicationTest extends TestCase
         $feature = $this->feature();
         $house = House::create(['map_feature_id' => $feature->id, 'house_code' => 'BGN-CONSENT', 'rt_code' => '01', 'public_visible' => true, 'verification_status' => 'verified', 'publication_status' => 'published']);
         $this->enablePublicationFixture('houses', $feature->layer);
-        $rt = User::factory()->create(['role' => 'admin_rt', 'rt_code' => '01', 'is_active' => true]);
+        /** @var User $rt */
+        $rt = User::factory()->createOne(['role' => 'admin_rt', 'rt_code' => '01', 'is_active' => true]);
         $this->actingAs($rt)->put(route('admin.houses.update', $house), ['address' => 'Alamat privat', 'latitude' => -7.3574198, 'longitude' => 110.9874323])->assertRedirect()->assertSessionHasNoErrors();
         $this->assertFalse($house->fresh()->public_visible);
         $this->assertSame('draft', $house->fresh()->publication_status);
