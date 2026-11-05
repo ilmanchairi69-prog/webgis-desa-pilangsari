@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\AuditLog;
+use App\Models\Complaint;
 use App\Models\Facility;
 use App\Models\FamilyMember;
 use App\Models\House;
@@ -13,6 +14,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
@@ -204,7 +206,9 @@ class ReleasePublicationTest extends TestCase
         $house = House::create(['map_feature_id' => $feature->id, 'house_code' => 'BGN-SCREEN-AUDIT', 'created_by' => $admin->id]);
         $this->enablePublicationFixture('houses', $feature->layer);
         $facility = $this->facility();
-        $ids = ['house' => $house->id, 'feature' => $feature->id, 'facility' => $facility->id, 'layer' => $feature->layer_id, 'user' => $admin->id];
+        Storage::disk('local')->put('complaints/private.pdf', 'private');
+        $complaint = Complaint::factory()->create(['attachment_path' => 'complaints/private.pdf']);
+        $ids = ['house' => $house->id, 'feature' => $feature->id, 'facility' => $facility->id, 'complaint' => $complaint->id, 'layer' => $feature->layer_id, 'user' => $admin->id];
         $this->actingAs($admin);
         foreach (Route::getRoutes() as $route) {
             if (! str_starts_with((string) $route->getName(), 'admin.') || ! in_array('GET', $route->methods(), true)) {
