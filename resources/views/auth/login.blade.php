@@ -1,7 +1,10 @@
 @extends('layouts.public')
 @section('title', 'Masuk Admin')
+@push('head')
+<link rel="stylesheet" href="{{ asset('css/login.css') }}?v={{ filemtime(public_path('css/login.css')) }}">
+@endpush
 @section('content')
-<section class="login-stage"><div class="login-decoration"><div class="section-overline">AREA PENGELOLA</div><h1>Kelola data dengan<br><em>pemeriksaan yang jelas.</em></h1><p>Akses pengelola hanya untuk akun yang dibuat oleh Super Admin. Setiap perubahan penting dicatat pada log audit.</p><a href="{{ route('home') }}" class="text-link">← Kembali ke portal publik</a></div><div class="login-panel"><div class="login-badge">P</div><div class="section-overline">WEBGIS PILANGSARI</div><h2>Masuk ke sistem</h2><p class="login-lead">Gunakan akun pengelola yang sudah terdaftar.</p>
+<section class="login-stage"><div class="login-decoration"><div class="section-overline">AREA PENGELOLA</div><h1>Kelola data dengan<br><em>pemeriksaan yang jelas.</em></h1><p>Akses pengelola hanya untuk akun yang dibuat oleh Super Admin. Setiap perubahan penting dicatat pada log audit.</p><a href="{{ route('home') }}" class="text-link">← Kembali ke portal publik</a></div><div class="login-panel"><img class="login-logo" src="{{ asset('images/portal/logo-sragen.png') }}" width="44" height="58" alt="Lambang Kabupaten Sragen"><div class="section-overline">WEBGIS PILANGSARI</div><h2>Masuk ke sistem</h2><p class="login-lead">Gunakan akun pengelola yang sudah terdaftar.</p>
 @if($errors->any())<div class="form-alert">{{ $errors->first() }}</div>@endif
 <form method="post" action="{{ route('login.store') }}" class="form-stack">@csrf
     <label>Email<input type="email" name="email" value="{{ old('email') }}" autocomplete="username" required autofocus></label>

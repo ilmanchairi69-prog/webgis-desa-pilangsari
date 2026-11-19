@@ -1,5 +1,5 @@
 .visit-widget { position: fixed; left: max(24px, env(safe-area-inset-left)); bottom: max(24px, env(safe-area-inset-bottom)); z-index: 800; font-family: inherit; }
-.visit-widget.visit-map-visible { visibility: hidden; pointer-events: none; }
+.visit-widget.visit-map-visible, .visit-widget.visit-footer-visible { visibility: hidden; pointer-events: none; }
 .visit-panel { width: min(380px, calc(100vw - 32px)); max-height: min(65vh, 480px); overflow-y: auto; margin-bottom: 10px; padding: 22px; border-radius: 16px; background: #505458; color: #fff; box-shadow: 0 10px 35px #0003; animation: visit-reveal .18s ease-out; }
 .visit-panel[hidden], .visit-widget [hidden] { display: none; }
 .visit-panel h2 { color: #fff; font-size: 18px; margin: 0 0 12px; }

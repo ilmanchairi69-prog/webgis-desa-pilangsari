@@ -9,24 +9,24 @@ class PublicVillagePagesTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_information_page_uses_public_navigation_and_links_to_the_map(): void
+    public function test_information_redirects_to_agenda_and_agenda_uses_public_navigation(): void
     {
-        $this->get(route('informasi'))->assertOk()
+        $this->get(route('informasi'))->assertStatus(301)->assertRedirect('/agenda');
+
+        $this->get(route('agenda'))->assertOk()
             ->assertSee('Kalender Agenda Desa')
             ->assertSee(route('map'))
             ->assertSee(route('profil'));
     }
 
-    public function test_agenda_pages_display_the_same_example_events_without_management_routes(): void
+    public function test_agenda_displays_events_without_management_routes(): void
     {
-        foreach (['agenda', 'informasi'] as $route) {
-            $this->get(route($route))->assertOk()
-                ->assertSee('Sosialisasi Website dan Peta Digital Desa Pilangsari')
-                ->assertSee('Pemberitahuan dan Pengenalan Layanan Informasi Digital Desa')
-                ->assertSee('2026-11-07')
-                ->assertSee('2026-11-08')
-                ->assertSee(route('map'));
-        }
+        $this->get(route('agenda'))->assertOk()
+            ->assertSee('Sosialisasi Website dan Peta Digital Desa Pilangsari')
+            ->assertSee('Pemberitahuan dan Pengenalan Layanan Informasi Digital Desa')
+            ->assertSee('2026-11-21')
+            ->assertSee('2026-11-08')
+            ->assertSee(route('map'));
         $this->post('/agenda')->assertStatus(405);
     }
 

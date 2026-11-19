@@ -36,10 +36,11 @@
 .village-portal .gov-section-title p { color:var(--gov-muted); font-size:15px; line-height:1.7; margin:0; }
 .village-portal .gov-welcome { display:grid; grid-template-columns:minmax(240px, .72fr) minmax(0, 1.55fr); gap:24px; align-items:start; }
 .village-portal .gov-leader-card { background:#fff; border:1px solid var(--gov-border); border-radius:22px; padding:10px; box-shadow:0 14px 38px #183b2b0d; overflow:hidden; }
-.village-portal .gov-leader-top { min-height:300px; display:flex; align-items:center; justify-content:center; flex-direction:column; border-radius:15px; background:radial-gradient(circle at 50% 25%,#4d8260,#164532 70%); color:#fff; }
-.village-portal .gov-leader-badge { padding:7px 12px; background:#ffffff1f; border:1px solid #ffffff30; border-radius:999px; font-size:10px; letter-spacing:.11em; }
-.village-portal .gov-leader-avatar { width:126px; height:126px; display:grid; place-items:center; margin:24px 0 18px; border:1px solid #ffffff6b; border-radius:50%; background:#e6d6a4; color:#174532; font-size:42px; font-weight:800; box-shadow:0 0 0 12px #ffffff12; }
-.village-portal .gov-leader-line { width:44px; height:3px; border-radius:3px; background:#e6d6a4; }
+.village-portal .gov-leader-top { position:relative; height:340px; overflow:hidden; border-radius:15px; background:radial-gradient(circle at 50% 25%,#4d8260,#164532 70%); color:#fff; }
+.village-portal .gov-leader-badge { position:absolute; z-index:1; top:14px; left:14px; padding:7px 12px; background:#ffffff1f; border:1px solid #ffffff30; border-radius:999px; font-size:10px; letter-spacing:.11em; }
+.village-portal .gov-leader-avatar { position:relative; width:100%; height:100%; display:grid; place-items:center; }
+.village-portal .gov-leader-avatar img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; }
+.village-portal .gov-leader-line { display:none; }
 .village-portal .gov-leader-details { padding:22px 18px 18px; }
 .village-portal .gov-leader-details > span { color:#5d805e; font-size:10px; font-weight:800; letter-spacing:.12em; }
 .village-portal .gov-leader-details h3 { font-size:22px; margin:9px 0; }
@@ -77,6 +78,8 @@
 .village-portal .gov-person:hover { transform:translateY(-4px); box-shadow:0 15px 32px #183b2b14; }
 .village-portal .gov-person-top { display:flex; justify-content:space-between; align-items:start; margin-bottom:22px; }
 .village-portal .gov-person-avatar { display:grid; place-items:center; width:64px; height:64px; border-radius:20px; background:#e7f1e2; color:#285d3e; font-size:25px; font-weight:800; }
+.village-portal .gov-person-avatar { position:relative; overflow:hidden; flex-shrink:0; }
+.village-portal .gov-person-avatar img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; }
 .village-portal .gov-person-icon { color:#78987c; }
 .village-portal .gov-person-icon svg { width:21px; height:21px; }
 .village-portal .gov-person-role { color:#4d7958; font-size:11px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }

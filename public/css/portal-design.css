@@ -44,6 +44,7 @@
 .village-portal .portal-government-fact strong { display: block; margin-top: 18px; color: #1a4a35; font-size: clamp(30px, 4vw, 45px); line-height: 1.1; }
 .village-portal .portal-government-fact p { margin-bottom: 0; }
 .village-portal .portal-footer { background: #0b3026; }
+.village-portal .portal-footer .brand-mark { flex: 0 0 auto; color: #fff; }
 .village-portal .portal-footer-grid > div > a:not(.portal-brand), .village-portal .portal-footer-grid > div > p, .village-portal .portal-footer-identity p { font-size: 13px; line-height: 1.7; }
 .village-portal .village-copy > p, .village-portal .village-card p { line-height: 1.8; }
 @media (max-width: 960px) { .village-portal .portal-government-intro { grid-template-columns: 1fr 1fr; } }

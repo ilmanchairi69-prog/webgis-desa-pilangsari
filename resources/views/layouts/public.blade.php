@@ -1,12 +1,44 @@
-@php($isVillagePortal = request()->routeIs('home', 'map', 'profil', 'pemerintahan', 'informasi', 'agenda'))
+@php
+    $isVillagePortal = request()->routeIs('home', 'map', 'profil', 'pemerintahan', 'informasi', 'agenda');
+    $isLoginPage = request()->routeIs('login', 'login.public-alias');
+    $seoPages = [
+        'home' => ['Beranda Desa Pilangsari', 'Kenali Desa Pilangsari di Kecamatan Gesi, Sragen, dan jelajahi informasi serta peta interaktif desa.'],
+        'profil' => ['Profil Desa Pilangsari', 'Mengenal sejarah, wilayah, kehidupan masyarakat, dan potensi Desa Pilangsari, Kecamatan Gesi, Kabupaten Sragen.'],
+        'pemerintahan' => ['Pemerintahan Desa Pilangsari', 'Mengenal struktur pemerintahan, perangkat desa, dan pelayanan masyarakat Desa Pilangsari.'],
+        'agenda' => ['Agenda Desa Pilangsari', 'Informasi kegiatan dan agenda di lingkungan Desa Pilangsari, Kecamatan Gesi, Kabupaten Sragen.'],
+        'map' => ['Peta Interaktif Desa Pilangsari', 'Jelajahi peta Desa Pilangsari serta lokasi rumah dan fasilitas umum yang telah dipublikasikan.'],
+    ];
+    $seoRoute = request()->routeIs('informasi') ? 'agenda' : request()->route()?->getName();
+    $seo = $seoPages[$seoRoute] ?? null;
+    $baseUrl = rtrim(config('app.url'), '/');
+    $canonicalUrl = $seo ? $baseUrl.route($seoRoute, [], false) : null;
+    $seoTitle = $seo ? $seo[0].' | WebGIS Desa Pilangsari' : 'Masuk Admin | WebGIS Desa Pilangsari';
+@endphp
 <!doctype html>
 <html lang="id">
 <head>
     @include('favicon')
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Pemerintah Desa Pilangsari') — Portal Informasi Desa</title>
-    <meta name="description" content="Portal informasi dan peta publik Desa Pilangsari, Kecamatan Gesi, Kabupaten Sragen, Jawa Tengah.">
+    <title>{{ $seoTitle }}</title>
+    @if($seo)
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="{{ $seo[1] }}">
+    <link rel="canonical" href="{{ $canonicalUrl }}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:site_name" content="WebGIS Desa Pilangsari">
+    <meta property="og:title" content="{{ $seoTitle }}">
+    <meta property="og:description" content="{{ $seo[1] }}">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
+    <meta property="og:image" content="{{ $baseUrl }}/images/portal/landscape-reference.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seoTitle }}">
+    <meta name="twitter:description" content="{{ $seo[1] }}">
+    <meta name="twitter:image" content="{{ $baseUrl }}/images/portal/landscape-reference.jpg">
+    @else
+    <meta name="robots" content="noindex, nofollow">
+    @endif
     <link rel="stylesheet" href="{{ asset('css/site.css') }}">
     <link rel="stylesheet" href="{{ asset('css/visit-widget.css') }}?v={{ filemtime(public_path('css/visit-widget.css')) }}">
     <script src="{{ asset('js/visit-widget.js') }}?v={{ filemtime(public_path('js/visit-widget.js')) }}" defer></script>
@@ -23,14 +55,14 @@
     <script src="{{ asset('js/portal.js') }}?v={{ filemtime(public_path('js/portal.js')) }}" defer></script>
     @endif
 </head>
-<body class="public-body{{ $isVillagePortal ? ' village-portal' : '' }}">
+<body class="public-body{{ $isVillagePortal ? ' village-portal' : '' }}{{ $isLoginPage ? ' login-page' : '' }}">
 <a class="skip-link" href="#main-content">Lewati ke konten</a>
 @if($isVillagePortal)
 @include('public.portal-navigation')
 @else
 <header class="site-header">
     <a class="brand" href="{{ route('home') }}" aria-label="Beranda Desa Pilangsari">
-        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 4 40 11v13c0 10-7 16-16 20C15 40 8 34 8 24V11z" fill="none" stroke="currentColor" stroke-width="2.3"/><path d="M24 13v22M16 21c5 0 8 3 8 8M32 18c-5 0-8 3-8 8M15 15c4 0 7 2 9 6M33 13c-4 1-7 4-9 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        @if($isLoginPage)<img class="login-header-logo" src="{{ asset('images/portal/logo-sragen.png') }}" width="44" height="58" alt="Lambang Kabupaten Sragen">@else @include('public.village-logo') @endif
         <span class="brand-copy"><strong>Desa Pilangsari<span class="brand-period">.</span></strong><small>Portal informasi geografis desa</small></span>
     </a>
     <button class="nav-toggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="public-navigation" data-nav-toggle><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
@@ -49,9 +81,15 @@
 <main id="main-content" tabindex="-1">@yield('content')</main>
 @if($isVillagePortal)
 @include('public.portal-footer')
+@elseif($isLoginPage)
+<footer class="site-footer login-footer">
+    <div class="footer-brand"><img class="login-footer-logo" src="{{ asset('images/portal/logo-sragen.png') }}" width="44" height="58" alt="Lambang Kabupaten Sragen"><div><strong>Pemerintah Desa Pilangsari</strong><p>Kecamatan Gesi, Kabupaten Sragen, Jawa Tengah</p></div></div>
+    <p class="footer-note">Portal Informasi Geografis Desa Pilangsari.</p>
+    <a href="{{ route('home') }}">Kembali ke halaman publik</a>
+</footer>
 @else
 <footer class="site-footer">
-    <div class="footer-brand"><span class="brand-mark small-mark">P</span><div><strong>Pemerintah Desa Pilangsari</strong><p>Kecamatan Gesi, Kabupaten Sragen, Jawa Tengah</p></div></div>
+    <div class="footer-brand">@include('public.village-logo')<div><strong>Pemerintah Desa Pilangsari</strong><p>Kecamatan Gesi, Kabupaten Sragen, Jawa Tengah</p></div></div>
     <p class="footer-note">Peta dan informasi publik ditampilkan setelah data melalui pemeriksaan. Data keluarga tidak dipublikasikan pada peta.</p>
     <a href="{{ route('login') }}">Akses Admin</a>
 </footer>
@@ -64,7 +102,9 @@
 @endif
 
 @include('public.visit-widget')
+@unless($isLoginPage)
 @include('public.complaint-widget')
+@endunless
 @stack('scripts')
 </body>
 </html>

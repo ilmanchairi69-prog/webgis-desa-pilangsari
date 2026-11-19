@@ -6,7 +6,7 @@ Portal informasi dan sistem informasi geografis Desa Pilangsari, Kecamatan Gesi,
 
 - **Portal publik:** beranda, profil desa, pemerintahan desa, informasi dan agenda, serta peta desa.
 - **Peta interaktif:** pencarian dan tampilan lokasi rumah serta fasilitas yang memenuhi ketentuan publikasi, dengan batas referensi GeoJSON. Batas tersebut bukan penetapan batas resmi untuk keperluan hukum atau pertanahan.
-- **Agenda desa:** kalender interaktif dan detail kegiatan pada `/agenda` dan `/informasi`. Data saat ini masih berupa contoh statis di `resources/views/public/agenda.blade.php`, termasuk kegiatan 7 dan 8 November 2026; ganti dengan jadwal resmi sebelum digunakan sebagai informasi kegiatan sebenarnya. Belum tersedia pengelolaan agenda atau database agenda.
+- **Agenda desa:** kalender interaktif dan detail kegiatan pada `/agenda`; `/informasi` mengarahkan ke halaman tersebut. Data kegiatan disimpan secara statis di `resources/views/public/agenda.blade.php` dan perlu diperbarui sesuai jadwal yang dikonfirmasi. Belum tersedia pengelolaan agenda atau database agenda.
 - **Pengaduan masyarakat:** formulir publik dengan nomor tiket, validasi dan Cloudflare Turnstile. Lampiran JPG, PNG, WEBP, atau PDF maksimal 5 MB disimpan secara privat. Tanggapan admin disimpan sebagai catatan internal dan tidak otomatis dikirim kepada pelapor.
 - **Statistik kunjungan:** hitungan agregat berdasarkan sesi dengan jeda 30 menit tanpa aktivitas, memakai kalender `Asia/Jakarta`. Total hanya mencakup kunjungan sejak fitur mulai mencatat.
 - **Pengelolaan internal:** data rumah, keluarga, fasilitas, peta, verifikasi, publikasi, akun pengguna, dan log audit sesuai peran.
@@ -102,7 +102,7 @@ Route pengelolaan memakai middleware autentikasi dan status akun; fungsi khusus 
 | `/` | Beranda dan peta ringkas. |
 | `/profil` | Profil dan wilayah desa. |
 | `/pemerintahan` | Pemerintahan dan perangkat desa. |
-| `/agenda`, `/informasi` | Kalender dan contoh agenda desa. |
+| `/agenda`, `/informasi` | Kalender agenda desa; `/informasi` mengarahkan ke `/agenda`. |
 | `/peta` | Peta publik interaktif. |
 | `/statistik-kunjungan` | Statistik kunjungan agregat dalam JSON. |
 | `/api/map/public` | Data peta publik dalam GeoJSON. |
@@ -144,3 +144,5 @@ Konfigurasi `phpunit.xml` menggunakan SQLite dalam memori. Pastikan ekstensi `pd
 ## Operasional
 
 Arahkan document root server ke direktori `public`, gunakan HTTPS pada lingkungan publik, batasi akses ke `.env` dan penyimpanan privat, dan sediakan backup database serta lampiran privat di lokasi terpisah. Jangan menjalankan `composer run setup` pada instalasi yang sudah berisi data: skrip tersebut mencakup pembuatan `APP_KEY` dan migration. Periksa migration serta lakukan backup sebelum deployment atau perubahan database.
+
+Untuk produksi, atur `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL` ke URL HTTPS yang benar, dan `SESSION_SECURE_COOKIE=true` setelah HTTPS tersedia. Simpan kredensial hanya dalam environment server. Direktori `storage` dan `bootstrap/cache` harus dapat ditulis oleh proses aplikasi. Jalankan `composer install --no-dev --optimize-autoloader` dan `npm ci --ignore-scripts` lalu `npm run build` di lingkungan build yang memenuhi persyaratan. Gunakan `php artisan storage:link --no-interaction` hanya jika penyimpanan publik diperlukan dan hosting mendukung symbolic link; jangan mengekspos penyimpanan privat. Buat Super Admin pertama secara interaktif hanya pada instalasi baru, dan jangan menjalankan seeder demo pada produksi.

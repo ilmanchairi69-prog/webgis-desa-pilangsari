@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#123c31">
     <title>@yield('title','Dashboard') &mdash; WebGIS Pilangsari</title>
     <link rel="stylesheet" href="{{ asset('css/site.css') }}">
@@ -17,7 +18,7 @@
 <div class="admin-shell">
     <aside class="admin-sidebar" id="admin-navigation" aria-label="Navigasi pengelola">
         <a class="admin-brand" href="{{ route('admin.dashboard') }}">
-            <span class="brand-mark small-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3 7 6-3 6 3 6-3v13l-6 3-6-3-6 3V7Z"/><path d="M9 4v13M15 7v13"/></svg></span>
+            <span class="brand-mark small-mark"><img class="admin-brand-logo" src="{{ asset('images/portal/logo-sragen.png') }}" width="44" height="58" alt="Lambang Kabupaten Sragen"></span>
             <span><strong>Pilangsari<span class="brand-period">.</span></strong><small>WEBGIS DESA</small></span>
         </a>
         <div class="sidebar-user"><span class="user-avatar">{{ mb_strtoupper(mb_substr(auth()->user()->name,0,1)) }}</span><div><strong>{{ auth()->user()->name }}</strong><small>{{ auth()->user()->isSuperAdmin() ? 'Super Admin' : 'Admin RT '.auth()->user()->rt_code }}</small></div></div>

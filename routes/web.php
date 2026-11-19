@@ -19,11 +19,19 @@ use App\Http\Controllers\WebsiteVisitStatisticsController;
 use App\Http\Middleware\RecordWebsiteVisit;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/sitemap.xml', function () {
+    $baseUrl = rtrim(config('app.url'), '/');
+    $routes = ['home', 'profil', 'pemerintahan', 'agenda', 'map'];
+    $urls = array_map(fn (string $name): string => $baseUrl.route($name, [], false), $routes);
+
+    return response()->view('sitemap', ['urls' => $urls])->header('Content-Type', 'application/xml; charset=UTF-8');
+})->name('sitemap');
+
 Route::middleware(RecordWebsiteVisit::class)->group(function (): void {
     Route::get('/', [HomeController::class, 'index'])->name('home')->block();
     Route::view('/profil', 'public.profil')->name('profil')->block();
     Route::view('/pemerintahan', 'public.pemerintahan')->name('pemerintahan')->block();
-    Route::view('/informasi', 'public.agenda')->name('informasi')->block();
+    Route::redirect('/informasi', '/agenda', 301)->name('informasi');
     Route::view('/agenda', 'public.agenda')->name('agenda')->block();
     Route::get('/peta', [PublicMapController::class, 'index'])->name('map')->block();
 });

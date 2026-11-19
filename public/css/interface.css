@@ -124,8 +124,9 @@ input[type=checkbox] { accent-color: #23784f; }
 .admin-brand > span:last-child { display: flex; flex-direction: column; gap: 3px; }
 .admin-brand strong { font-family: Manrope, sans-serif; font-size: 23px; font-weight: 800; color: #fff; letter-spacing: -.9px; }
 .admin-brand small { color: #83a391; font-size: 8px; letter-spacing: .21em; }
-.admin-brand .brand-mark { color: #dbe8cc; background: #ffffff0c; border: 1px solid #ffffff1a; border-radius: 13px; width: 43px; height: 43px; }
+.admin-brand .brand-mark { color: #dbe8cc; background: transparent; border: 0; box-shadow: none; width: 43px; height: 43px; }
 .admin-brand .brand-mark svg { width: 26px; height: 26px; }
+.admin-brand .admin-brand-logo { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
 .sidebar-user { padding: 20px 12px; gap: 11px; border-bottom: 1px solid #ffffff12; }
 .user-avatar { width: 36px; height: 36px; background: #e6d6a4; border: 0; color: #3f5535; font-weight: 700; font-size: 14px; border-radius: 12px; }
 .sidebar-user > div { display: flex; min-width: 0; }

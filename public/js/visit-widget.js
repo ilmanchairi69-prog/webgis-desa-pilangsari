@@ -56,5 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
             widget.classList.toggle('visit-map-visible', entries[0].isIntersecting);
         }, { threshold: 0.05 }).observe(map);
     }
+    const footer = document.querySelector('footer');
+    if (footer && 'IntersectionObserver' in window) {
+        new IntersectionObserver(entries => {
+            widget.classList.toggle('visit-footer-visible', entries[0].isIntersecting);
+        }).observe(footer);
+    }
     load();
 });
