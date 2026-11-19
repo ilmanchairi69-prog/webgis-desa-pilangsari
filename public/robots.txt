@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://webgis-pilangsari.id/sitemap.xml
+Sitemap: https://desa.pilangsari.id/sitemap.xml
