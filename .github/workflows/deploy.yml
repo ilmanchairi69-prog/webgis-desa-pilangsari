@@ -4,6 +4,17 @@ on:
   push:
     branches: [sync-local-webgis]
 
+  workflow_dispatch:
+    inputs:
+      confirm_production_deploy:
+        description: 'Konfirmasi sebelum menjalankan deployment produksi'
+        required: true
+        type: choice
+        options:
+          - 'NO - DO NOT DEPLOY'
+          - 'DEPLOY PRODUCTION'
+        default: 'NO - DO NOT DEPLOY'
+
 permissions:
   contents: read
 
@@ -104,8 +115,9 @@ jobs:
     needs: build
     # The first SHA must be approved explicitly. Enable automatic releases after first verification.
     if: >-
+      github.event_name == 'workflow_dispatch' &&
       github.ref == 'refs/heads/sync-local-webgis' &&
-      (vars.WEBGIS_FIRST_DEPLOY_SHA == github.sha || vars.WEBGIS_AUTO_DEPLOY == 'true')
+      inputs.confirm_production_deploy == 'DEPLOY PRODUCTION'
     environment:
       name: production
       url: https://desa.pilangsari.id
