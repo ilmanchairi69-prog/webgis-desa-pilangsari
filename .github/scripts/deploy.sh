@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Run through SSH as the site owner. Provision the stable document-root link and
-# the private shared environment separately before the first deployment.
+# Run through SSH as the site owner. Hostinger serves a physical public_html.
 set -Eeuo pipefail
 umask 077
 
@@ -18,7 +17,7 @@ shared="$base/shared"
 current="$base/current"
 docroot="$home_dir/domains/desa.pilangsari.id/public_html"
 
-for utility in realpath mktemp tar sha256sum flock curl awk stat; do
+for utility in realpath mktemp tar sha256sum flock curl awk stat python3; do
     command -v "$utility" >/dev/null || fail "Missing server command: $utility"
 done
 owned_dir() {
@@ -30,10 +29,7 @@ for path in "$base" "$releases" "$shared"; do
 done
 [[ -f $shared/.env && ! -L $shared/.env && -O $shared/.env ]] &&
     (( (8#$(stat -c %a -- "$shared/.env") & 077) == 0 )) || fail 'Private production environment is absent or permissions are too broad.'
-[[ -L $docroot && -L $current ]] || fail 'Prepare the stable public_html -> current/public link and previous release first.'
-web_target=$(readlink -- "$docroot")
-[[ $web_target == /* ]] || web_target="$(dirname "$docroot")/$web_target"
-[[ $(realpath -ms -- "$web_target") == "$current/public" ]] || fail 'Unexpected document-root symlink.'
+[[ -L $current ]] && owned_dir "$docroot" || fail 'Expected a private current link and an owner-controlled physical public_html.'
 upload_dir=$(dirname -- "$archive")
 [[ $(dirname -- "$upload_dir") == "$home_dir" && $(basename -- "$upload_dir") =~ ^\.webgis-upload\.[a-zA-Z0-9]+$ &&
    $archive == "$upload_dir/release.tar.gz" && -f $archive && ! -L $archive && -O $archive ]] &&
@@ -46,7 +42,37 @@ flock -n 9 || fail 'Another deployment is in progress.'
 previous=$(realpath -e -- "$current")
 [[ $(dirname "$previous") == "$releases" ]] && owned_dir "$previous" && owned_dir "$previous/public" ||
     fail 'Existing release cannot be retained for rollback.'
-[[ $(realpath -e -- "$docroot") == "$previous/public" ]] || fail 'Document root does not resolve to the previous public tree.'
+public_fingerprint() {
+    # GNU tar records links themselves (including storage), never their contents.
+    tar --format=gnu --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner \
+        -C "$1" -cf - . | sha256sum | awk '{print $1}'
+}
+exchange_roots() {
+    python3 - "$docroot" "$exchange_dir" <<'PY'
+import ctypes
+import os
+import sys
+
+exchange = ctypes.CDLL(None, use_errno=True).renameat2
+exchange.argtypes = (ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint)
+if exchange(-100, os.fsencode(sys.argv[1]), -100, os.fsencode(sys.argv[2]), 2):
+    raise SystemExit("Atomic public directory exchange failed (errno %d)." % ctypes.get_errno())
+PY
+}
+if [[ -f $previous/public-tree.sha256 && ! -L $previous/public-tree.sha256 ]]; then
+    read -r old_hash < "$previous/public-tree.sha256"
+    [[ $old_hash =~ ^[0-9a-f]{64}$ ]] && cmp -s "$docroot/webgis-release.txt" "$previous/public/webgis-release.txt" ||
+        fail 'Existing webroot does not match the active release.'
+else
+    shopt -s dotglob nullglob
+    entries=("$docroot"/*)
+    shopt -u dotglob nullglob
+    [[ ${#entries[@]} == 1 && ${entries[0]:-} == "$docroot/default.php" && -f $docroot/default.php && ! -L $docroot/default.php ]] ||
+        fail 'Unmanaged public_html contains content that must be preserved before activation.'
+    old_hash=$(public_fingerprint "$docroot")
+fi
+[[ $(public_fingerprint "$docroot") == "$old_hash" ]] || fail 'Changed public files must be reconciled before deployment.'
+old_inode=$(stat -c '%d:%i' -- "$docroot")
 previous_env_hash=$(sha256sum "$shared/.env" | awk '{print $1}')
 
 php_bin=
@@ -110,6 +136,10 @@ try {
     require 'vendor/autoload.php';
     $app = require 'bootstrap/app.php';
     $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+    if (realpath($app->basePath()) !== realpath(getcwd()) ||
+        realpath($app->storagePath('app/private')) !== realpath(dirname(realpath('.env')).'/storage/app/private')) {
+        throw new RuntimeException();
+    }
     $key = $app['config']->get('app.key');
     if (!$app->environment('production') || $app['config']->get('app.debug') !== false ||
         $app['config']->get('app.url') !== 'https://desa.pilangsari.id' ||
@@ -139,20 +169,37 @@ try {
     exit(1);
 }
 PHP
-"$php_bin" artisan optimize --no-interaction >/dev/null 2>&1 || fail 'Candidate configuration, routes, or views could not be cached.'
+# Run each Artisan command in the SSH shell and check its own exit status.
+for task in config:cache event:cache route:cache view:cache; do
+    COLUMNS=100 LINES=24 "$php_bin" artisan "$task" --quiet --no-interaction >/dev/null 2>&1 || fail "Candidate cache step failed: $task"
+done
 printf '%s\n' "$commit" > public/webgis-release.txt
 chmod 711 "$release"
 chmod -R u=rwX,go=rX public
 ln -s -- "$shared/storage/app/public" public/storage
 [[ $(realpath -e -- public/storage) == "$shared/storage/app/public" ]] || fail 'Public storage symlink is incorrect.'
 
+# Before the exchange this is the candidate public tree. Afterwards the same
+# private path holds the complete preceding physical webroot for recovery.
+exchange_dir="$release/previous-public_html"
+mkdir "$exchange_dir"
+cp -a -- public/. "$exchange_dir/"
+"$php_bin" -r 'printf("<?php\nheader(%s);\nrequire %s;\n", var_export("X-WebGIS-Release: ".$argv[2], true), var_export($argv[1], true));' \
+    "$release/public/index.php" "$commit" > "$exchange_dir/index.php"
+[[ -s $exchange_dir/index.php ]] && "$php_bin" -l "$exchange_dir/index.php" >/dev/null || fail 'Public entry point is invalid.'
+chgrp --reference="$docroot" "$exchange_dir"
+chmod --reference="$docroot" "$exchange_dir"
+[[ $(stat -c %d -- "$exchange_dir") == "$(stat -c %d -- "$docroot")" ]] || fail 'Atomic public exchange requires the same filesystem.'
+new_inode=$(stat -c '%d:%i' -- "$exchange_dir")
+public_fingerprint "$exchange_dir" > "$release/public-tree.sha256"
+
 # Resolve the live URL without redirects; a holding page can also return 200.
 get_page() {
     local path=$1 separator='?'
     [[ $path != *\?* ]] || separator='&'
     code=$(curl -q --silent --compressed --proto '=https' --max-time 18 --connect-timeout 6 \
-        --user-agent WebGISDeployBot --header 'Cache-Control: no-cache' --output "$tx/response" \
-        --write-out '%{http_code}' "$site$path${separator}release-check=$(basename "$tx")")
+        --user-agent WebGISDeployBot --header 'Cache-Control: no-cache' --output "$tx/response" --dump-header "$tx/headers" \
+        --write-out '%{http_code}' "$site$path${separator}release-check=$(basename "$tx")-$RANDOM")
 }
 has_previous_site() {
     if [[ -f $previous/public/webgis-release.txt ]]; then
@@ -165,17 +212,25 @@ ln -s -- "$release" "$tx/next"
 ln -s -- "$previous" "$tx/rollback"
 
 switched=0
+restore_public() {
+    case "$(stat -c '%d:%i' -- "$docroot")" in
+        "$new_inode") exchange_roots || return 1 ;;
+        "$old_inode") ;;
+        *) return 1 ;;
+    esac
+    [[ $(stat -c '%d:%i' -- "$docroot") == "$old_inode" ]]
+}
 on_exit() {
     local status=$?
     trap - EXIT HUP INT TERM
     if (( status != 0 && switched )); then
-        if mv -Tf -- "$tx/rollback" "$current" && [[ $(realpath -e -- "$docroot") == "$previous/public" ]] && has_previous_site; then
+        if restore_public && mv -Tf -- "$tx/rollback" "$current" && [[ $(realpath -e -- "$current") == "$previous" ]] && has_previous_site; then
             printf '%s\n' 'Previous release restored and checked over HTTPS.' >&2
         else
             printf '%s\n' 'URGENT: automatic rollback could not be verified.' >&2
         fi
     fi
-    rm -f -- "$tx/response" "$tx/rollback" "$tx/next"
+    rm -f -- "$tx/response" "$tx/headers" "$tx/rollback" "$tx/next"
     rmdir -- "$tx" || true
     exit "$status"
 }
@@ -184,14 +239,19 @@ trap 'exit 129' HUP
 trap 'exit 130' INT
 trap 'exit 143' TERM
 [[ $(realpath -e -- "$current") == "$previous" ]] || fail 'Live release changed during preparation.'
+[[ $(stat -c '%d:%i' -- "$docroot") == "$old_inode" ]] || fail 'Live public directory changed during preparation.'
 switched=1
+exchange_roots
+[[ $(stat -c '%d:%i' -- "$docroot") == "$new_inode" && $(public_fingerprint "$exchange_dir") == "$old_hash" ]] ||
+    fail 'The previous webroot changed during activation.'
 mv -Tf -- "$tx/next" "$current"
-[[ $(realpath -e -- "$docroot") == "$release/public" ]] || fail 'Incorrect live document root.'
+[[ $(realpath -e -- "$current") == "$release" ]] || fail 'Private release pointer is incorrect.'
 get_page /webgis-release.txt
 [[ $code == 200 ]] && cmp -s "$tx/response" public/webgis-release.txt || fail 'HTTPS did not serve this exact commit.'
 for page in / /profil /pemerintahan /agenda /peta; do
     get_page "$page"
     [[ $code == 200 ]] && grep -Fq "<link rel=\"canonical\" href=\"$site$page\">" "$tx/response" || fail "Public page check failed: $page"
+    tr -d '\r' < "$tx/headers" | grep -Fxiq "X-WebGIS-Release: $commit" || fail 'PHP served a different release.'
 done
 get_page /Admin/login
 [[ $code == 200 ]] && grep -Fq 'content="noindex, nofollow"' "$tx/response" || fail 'Login page failed its HTTPS check.'
