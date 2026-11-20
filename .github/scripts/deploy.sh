@@ -250,8 +250,32 @@ get_page /webgis-release.txt
 [[ $code == 200 ]] && cmp -s "$tx/response" public/webgis-release.txt || fail 'HTTPS did not serve this exact commit.'
 for page in / /profil /pemerintahan /agenda /peta; do
     get_page "$page"
-    [[ $code == 200 ]] && grep -Fq "<link rel=\"canonical\" href=\"$site$page\">" "$tx/response" || fail "Public page check failed: $page"
-    tr -d '\r' < "$tx/headers" | grep -Fxiq "X-WebGIS-Release: $commit" || fail 'PHP served a different release.'
+
+    # 1. Periksa status HTTP secara terpisah.
+    if [[ ${code:-} != 200 ]]; then
+        printf 'PUBLIC PAGE HTTP FAILURE: %s (HTTP %s)\n' "$page" "${code:-empty}" >&2
+        grep -Eio '<title>[^<]*</title>' "$tx/response" | head -n 2 >&2 || true
+        fail "Public page returned unexpected HTTP status: $page"
+    fi
+
+    # 2. Periksa canonical URL.
+    canonical="<link rel=\"canonical\" href=\"$site$page\">"
+
+    if ! grep -Fq "$canonical" "$tx/response"; then
+        printf 'PUBLIC PAGE CANONICAL FAILURE: %s\n' "$page" >&2
+        printf '%s\n' 'Canonical information returned by server:'
+        grep -i 'canonical' "$tx/response" | head -n 5 >&2 || true
+        printf '%s\n' 'Page title:'
+        grep -Eio '<title>[^<]*</title>' "$tx/response" | head -n 2 >&2 || true
+        fail "Public page canonical mismatch: $page"
+    fi
+
+    # 3. Pastikan respons berasal dari release yang sedang diuji.
+    if ! tr -d '\r' < "$tx/headers" | grep -Fxiq "X-WebGIS-Release: $commit"; then
+        printf 'PUBLIC PAGE RELEASE HEADER FAILURE: %s\n' "$page" >&2
+        grep -i '^X-WebGIS-Release:' "$tx/headers" | head -n 2 >&2 || true
+        fail "PHP served a different release: $page"
+    fi
 done
 get_page /Admin/login
 [[ $code == 200 ]] && grep -Fq 'content="noindex, nofollow"' "$tx/response" || fail 'Login page failed its HTTPS check.'
