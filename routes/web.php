@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\VerificationController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicComplaintController;
+use App\Http\Controllers\PublicContentController;
 use App\Http\Controllers\PublicMapController;
 use App\Http\Controllers\WebsiteVisitStatisticsController;
 use App\Http\Middleware\RecordWebsiteVisit;
@@ -22,6 +23,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/sitemap.xml', function () {
     $baseUrl = rtrim(config('app.url'), '/');
     $routes = ['home', 'profil', 'pemerintahan', 'agenda', 'map'];
+
+    foreach (config('public-pages.pages', []) as $page) {
+        if (($page['index'] ?? false) === true) {
+            $routes[] = $page['route'];
+        }
+    }
+
+    $routes = array_values(array_unique($routes));
     $urls = array_map(fn (string $name): string => $baseUrl.route($name, [], false), $routes);
 
     return response()->view('sitemap', ['urls' => $urls])->header('Content-Type', 'application/xml; charset=UTF-8');
@@ -34,6 +43,16 @@ Route::middleware(RecordWebsiteVisit::class)->group(function (): void {
     Route::redirect('/informasi', '/agenda', 301)->name('informasi');
     Route::view('/agenda', 'public.agenda')->name('agenda')->block();
     Route::get('/peta', [PublicMapController::class, 'index'])->name('map')->block();
+
+    Route::redirect('/profil-desa', '/profil', 301)->name('public.profil-desa');
+    Route::redirect('/pemerintahan-desa', '/pemerintahan', 301)->name('public.pemerintahan-desa');
+    Route::redirect('/peta-desa', '/peta', 301)->name('public.peta-desa');
+
+    foreach (config('public-pages.pages', []) as $slug => $page) {
+        Route::get('/'.$slug, fn () => app(PublicContentController::class)->show($slug))
+            ->name($page['route'])
+            ->block();
+    }
 });
 Route::post('/pengaduan', [PublicComplaintController::class, 'store'])->middleware('throttle:5,10')->name('complaints.store');
 Route::get('/statistik-kunjungan', WebsiteVisitStatisticsController::class)->name('visits.statistics');

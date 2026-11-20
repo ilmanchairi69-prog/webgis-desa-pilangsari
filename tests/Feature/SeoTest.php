@@ -23,7 +23,22 @@ class SeoTest extends TestCase
             'https://example.test/subdirectory/pemerintahan',
             'https://example.test/subdirectory/agenda',
             'https://example.test/subdirectory/peta',
+            'https://example.test/subdirectory/sejarah-desa',
+            'https://example.test/subdirectory/letak-geografis',
+            'https://example.test/subdirectory/perangkat-desa',
+            'https://example.test/subdirectory/struktur-organisasi',
+            'https://example.test/subdirectory/kepala-desa',
+            'https://example.test/subdirectory/wilayah-administratif',
+            'https://example.test/subdirectory/transparansi',
+            'https://example.test/subdirectory/potensi-desa',
+            'https://example.test/subdirectory/pertanian',
+            'https://example.test/subdirectory/wisata-desa',
+            'https://example.test/subdirectory/dusun',
+            'https://example.test/subdirectory/fasilitas-umum',
         ], $locations);
+
+        $this->assertNotContains('https://example.test/subdirectory/visi-misi', $locations);
+        $this->assertNotContains('https://example.test/subdirectory/profil-desa', $locations);
     }
 
     public function test_public_page_has_metadata_and_alias_uses_canonical_url(): void
@@ -37,7 +52,7 @@ class SeoTest extends TestCase
             ->assertSee('<link rel="canonical" href="https://example.test/profil">', false)
             ->assertSee('<meta property="og:title"', false)
             ->assertSee('<meta name="twitter:card"', false)
-            ->assertSee('Mengenal sejarah, wilayah, kehidupan masyarakat', false);
+            ->assertSee('Mengenal sejarah, wilayah administratif, kehidupan masyarakat', false);
 
         $this->get('/agenda')->assertOk()
             ->assertSee('<link rel="canonical" href="https://example.test/agenda">', false);

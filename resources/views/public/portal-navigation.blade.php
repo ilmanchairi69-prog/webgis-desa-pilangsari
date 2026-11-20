@@ -11,6 +11,7 @@
             <a href="{{ route('profil') }}" @if(request()->routeIs('profil')) aria-current="page" @endif>Profil Desa</a>
             <a href="{{ route('pemerintahan') }}" @if(request()->routeIs('pemerintahan')) aria-current="page" @endif>Pemerintahan</a>
             <a href="{{ route('agenda') }}" @if(request()->routeIs('informasi', 'agenda')) aria-current="page" @endif>Agenda</a>
+            <a href="{{ route('public.potensi-desa') }}" @if(request()->routeIs('public.potensi-desa', 'public.pertanian', 'public.wisata-desa')) aria-current="page" @endif>Potensi</a>
             <a href="{{ route('map') }}" @if(request()->routeIs('map')) aria-current="page" @endif>Peta Desa</a>
             <a class="portal-button portal-button-yellow portal-nav-cta" href="{{ route('map') }}">Jelajahi Peta @include('public.portal-icon', ['name' => 'arrow'])</a>
         </nav>

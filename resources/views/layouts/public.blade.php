@@ -1,18 +1,81 @@
 @php
-    $isVillagePortal = request()->routeIs('home', 'map', 'profil', 'pemerintahan', 'informasi', 'agenda');
+    $isVillagePortal = request()->routeIs('home', 'map', 'profil', 'pemerintahan', 'informasi', 'agenda', 'public.*');
     $isLoginPage = request()->routeIs('login', 'login.public-alias');
     $seoPages = [
-        'home' => ['Beranda Desa Pilangsari', 'Kenali Desa Pilangsari di Kecamatan Gesi, Sragen, dan jelajahi informasi serta peta interaktif desa.'],
-        'profil' => ['Profil Desa Pilangsari', 'Mengenal sejarah, wilayah, kehidupan masyarakat, dan potensi Desa Pilangsari, Kecamatan Gesi, Kabupaten Sragen.'],
-        'pemerintahan' => ['Pemerintahan Desa Pilangsari', 'Mengenal struktur pemerintahan, perangkat desa, dan pelayanan masyarakat Desa Pilangsari.'],
-        'agenda' => ['Agenda Desa Pilangsari', 'Informasi kegiatan dan agenda di lingkungan Desa Pilangsari, Kecamatan Gesi, Kabupaten Sragen.'],
-        'map' => ['Peta Interaktif Desa Pilangsari', 'Jelajahi peta Desa Pilangsari serta lokasi rumah dan fasilitas umum yang telah dipublikasikan.'],
+        'home' => ['Desa Pilangsari Gesi | Website Resmi Pemerintah Desa Pilangsari', 'Website resmi Pemerintah Desa Pilangsari, Kecamatan Gesi, Kabupaten Sragen. Temukan profil desa, informasi pemerintahan, agenda, layanan masyarakat, dan peta wilayah.'],
+        'profil' => ['Profil Desa Pilangsari Gesi', 'Mengenal sejarah, wilayah administratif, kehidupan masyarakat, dan potensi Desa Pilangsari, Kecamatan Gesi, Kabupaten Sragen.'],
+        'pemerintahan' => ['Pemerintah Desa Pilangsari Gesi', 'Kenali struktur pemerintahan, perangkat desa, kebayanan, dan pelayanan Pemerintah Desa Pilangsari, Kecamatan Gesi, Sragen.'],
+        'agenda' => ['Agenda Desa Pilangsari Gesi', 'Informasi kegiatan dan agenda resmi di lingkungan Desa Pilangsari, Kecamatan Gesi, Kabupaten Sragen.'],
+        'map' => ['Peta Desa Pilangsari Gesi | WebGIS', 'Jelajahi peta digital Desa Pilangsari serta lokasi rumah dan fasilitas umum yang telah diverifikasi untuk publikasi.'],
     ];
     $seoRoute = request()->routeIs('informasi') ? 'agenda' : request()->route()?->getName();
-    $seo = $seoPages[$seoRoute] ?? null;
+    $defaultSeo = $seoPages[$seoRoute] ?? null;
+    $seo = isset($seoPage) ? [$seoPage['title'], $seoPage['description']] : $defaultSeo;
     $baseUrl = rtrim(config('app.url'), '/');
-    $canonicalUrl = $seo ? $baseUrl.route($seoRoute, [], false) : null;
-    $seoTitle = $seo ? $seo[0].' | WebGIS Desa Pilangsari' : 'Masuk Admin | WebGIS Desa Pilangsari';
+    $canonicalRoute = $seoPage['canonicalRoute'] ?? $seoRoute;
+    $canonicalUrl = $seo ? $baseUrl.route($canonicalRoute, [], false) : null;
+    $isIndexable = $seo && ($seoPage['index'] ?? true);
+    $seoTitle = $seo ? $seo[0] : 'Masuk Admin | WebGIS Desa Pilangsari';
+    $breadcrumbs = $seoPage['breadcrumbs'] ?? [
+        ['name' => 'Beranda', 'route' => 'home'],
+        ['name' => $seo[0] ?? 'Masuk Admin', 'route' => $canonicalRoute],
+    ];
+    $organizationId = $baseUrl.'/#organization';
+    $websiteId = $baseUrl.'/#website';
+    $structuredData = [];
+    if ($seo) {
+        $structuredData[] = [
+            '@type' => 'GovernmentOrganization',
+            '@id' => $organizationId,
+            'name' => 'Pemerintah Desa Pilangsari',
+            'url' => $baseUrl.'/',
+            'logo' => $baseUrl.'/images/portal/logo-sragen.png',
+            'areaServed' => 'Desa Pilangsari, Kecamatan Gesi, Kabupaten Sragen, Jawa Tengah',
+        ];
+        $structuredData[] = [
+            '@type' => 'WebSite',
+            '@id' => $websiteId,
+            'url' => $baseUrl.'/',
+            'name' => 'Website Resmi Desa Pilangsari',
+            'publisher' => ['@id' => $organizationId],
+            'inLanguage' => 'id-ID',
+        ];
+        $structuredData[] = [
+            '@type' => 'WebPage',
+            '@id' => $canonicalUrl.'#webpage',
+            'url' => $canonicalUrl,
+            'name' => $seoTitle,
+            'description' => $seo[1],
+            'isPartOf' => ['@id' => $websiteId],
+            'about' => ['@id' => $organizationId],
+            'inLanguage' => 'id-ID',
+        ];
+        if (count($breadcrumbs) > 1) {
+            $structuredData[] = [
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => collect($breadcrumbs)->values()->map(fn (array $item, int $index): array => [
+                    '@type' => 'ListItem',
+                    'position' => $index + 1,
+                    'name' => $item['name'],
+                    'item' => $baseUrl.route($item['route'], [], false),
+                ])->all(),
+            ];
+        }
+        if ($seoRoute === 'agenda') {
+            $structuredData[] = [
+                '@type' => 'Event',
+                'name' => 'Sosialisasi Website dan Peta Digital Desa Pilangsari',
+                'startDate' => '2026-11-21T09:00:00+07:00',
+                'endDate' => '2026-11-21T11:00:00+07:00',
+                'eventStatus' => 'https://schema.org/EventScheduled',
+                'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
+                'location' => ['@type' => 'Place', 'name' => 'Balai Desa Pilangsari'],
+                'organizer' => ['@id' => $organizationId],
+                'url' => $canonicalUrl,
+                'description' => 'Presentasi dan sosialisasi website resmi serta WebGIS Desa Pilangsari kepada Pemerintah Desa.',
+            ];
+        }
+    }
 @endphp
 <!doctype html>
 <html lang="id">
@@ -22,7 +85,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $seoTitle }}</title>
     @if($seo)
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="{{ $isIndexable ? 'index, follow' : 'noindex, follow' }}">
     <meta name="description" content="{{ $seo[1] }}">
     <link rel="canonical" href="{{ $canonicalUrl }}">
     <meta property="og:type" content="website">
@@ -32,10 +95,14 @@
     <meta property="og:description" content="{{ $seo[1] }}">
     <meta property="og:url" content="{{ $canonicalUrl }}">
     <meta property="og:image" content="{{ $baseUrl }}/images/portal/landscape-reference.jpg">
+    <meta property="og:image:width" content="1376">
+    <meta property="og:image:height" content="768">
+    <meta property="og:image:alt" content="Lanskap pedesaan untuk portal Desa Pilangsari">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $seoTitle }}">
     <meta name="twitter:description" content="{{ $seo[1] }}">
     <meta name="twitter:image" content="{{ $baseUrl }}/images/portal/landscape-reference.jpg">
+    <script type="application/ld+json">{!! json_encode(['@'.'context' => 'https://schema.org', '@'.'graph' => $structuredData], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
     @else
     <meta name="robots" content="noindex, nofollow">
     @endif
