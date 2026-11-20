@@ -212,6 +212,54 @@ ln -s -- "$release" "$tx/next"
 ln -s -- "$previous" "$tx/rollback"
 
 switched=0
+diagnose_before_rollback() {
+    local active path correlation lane origin=145.223.108.78 result rc
+    local -a transport
+    active=$(readlink -- "$current" 2>/dev/null) || active=unavailable
+    printf 'pre_rollback time=%s commit=%s candidate=%s active=%s\n' \
+        "$(date -u +%FT%TZ)" "$commit" "$(basename -- "$release")" "$(basename -- "$active")"
+
+    for path in / /profil /pemerintahan /agenda /peta; do
+        correlation="$(basename -- "$tx")-${path#/}-$RANDOM"
+        for lane in cdn origin; do
+            transport=()
+            if [[ $lane == origin ]]; then
+                transport=(--resolve "desa.pilangsari.id:443:$origin")
+            fi
+            : > "$tx/diagnostic.headers"
+            : > "$tx/diagnostic.body"
+            rc=0
+            result=$(curl -q --silent --compressed --proto '=https' --proto-redir '=https' \
+                --location --max-redirs 3 --max-time 3 --connect-timeout 2 --max-filesize 1048576 \
+                --user-agent WebGISDeployBot --header 'Cache-Control: no-cache' \
+                --header "X-Request-ID: $correlation" "${transport[@]}" \
+                --dump-header "$tx/diagnostic.headers" --output "$tx/diagnostic.body" \
+                --write-out 'status=%{http_code} redirects=%{num_redirects} seconds=%{time_total}' \
+                "$site$path?release-check=$correlation") || rc=$?
+            printf 'probe time=%s lane=%s path=%s correlation=%s curl_exit=%s %s body_sha256=%s\n' \
+                "$(date -u +%FT%TZ)" "$lane" "$path" "$correlation" "$rc" "$result" \
+                "$(sha256sum "$tx/diagnostic.body" | awk '{print $1}')"
+            # Keep only response status lines and known diagnostic headers.
+            # Log the presence of Location, not its potentially sensitive URL.
+            LC_ALL=C awk '
+                { sub(/\r$/, "") }
+                /^HTTP\/[0-9.]+ [0-9][0-9][0-9]/ { print "  " $1 " " $2; next }
+                {
+                    colon = index($0, ":")
+                    if (!colon) next
+                    name = tolower(substr($0, 1, colon - 1))
+                    value = substr($0, colon + 1)
+                    sub(/^[ \t]+/, "", value)
+                    if (name == "location") { print "  location: [redacted]"; next }
+                    if (name == "content-type") sub(/;.*/, "", value)
+                    if (name ~ /^(server|content-type|x-webgis-release|x-request-id|cf-ray|x-hcdn-request-id|x-hcdn-cache-status)$/ &&
+                        length(value) <= 160 && value ~ /^[a-zA-Z0-9 ._\/-]+$/) print "  " name ": " value
+                }
+            ' "$tx/diagnostic.headers"
+        done
+    done
+}
+
 restore_public() {
     case "$(stat -c '%d:%i' -- "$docroot")" in
         "$new_inode") exchange_roots || return 1 ;;
@@ -224,13 +272,16 @@ on_exit() {
     local status=$?
     trap - EXIT HUP INT TERM
     if (( status != 0 && switched )); then
+        # Diagnostics are best effort and run while the candidate is still live.
+        ( diagnose_before_rollback ) >&2 || true
         if restore_public && mv -Tf -- "$tx/rollback" "$current" && [[ $(realpath -e -- "$current") == "$previous" ]] && has_previous_site; then
             printf '%s\n' 'Previous release restored and checked over HTTPS.' >&2
         else
             printf '%s\n' 'URGENT: automatic rollback could not be verified.' >&2
         fi
     fi
-    rm -f -- "$tx/response" "$tx/headers" "$tx/rollback" "$tx/next"
+    rm -f -- "$tx/response" "$tx/headers" "$tx/rollback" "$tx/next" \
+        "$tx/diagnostic.headers" "$tx/diagnostic.body"
     rmdir -- "$tx" || true
     exit "$status"
 }
@@ -254,7 +305,6 @@ for page in / /profil /pemerintahan /agenda /peta; do
     # 1. Periksa status HTTP secara terpisah.
     if [[ ${code:-} != 200 ]]; then
         printf 'PUBLIC PAGE HTTP FAILURE: %s (HTTP %s)\n' "$page" "${code:-empty}" >&2
-        grep -Eio '<title>[^<]*</title>' "$tx/response" | head -n 2 >&2 || true
         fail "Public page returned unexpected HTTP status: $page"
     fi
 
@@ -263,17 +313,12 @@ for page in / /profil /pemerintahan /agenda /peta; do
 
     if ! grep -Fq "$canonical" "$tx/response"; then
         printf 'PUBLIC PAGE CANONICAL FAILURE: %s\n' "$page" >&2
-        printf '%s\n' 'Canonical information returned by server:'
-        grep -i 'canonical' "$tx/response" | head -n 5 >&2 || true
-        printf '%s\n' 'Page title:'
-        grep -Eio '<title>[^<]*</title>' "$tx/response" | head -n 2 >&2 || true
         fail "Public page canonical mismatch: $page"
     fi
 
     # 3. Pastikan respons berasal dari release yang sedang diuji.
     if ! tr -d '\r' < "$tx/headers" | grep -Fxiq "X-WebGIS-Release: $commit"; then
         printf 'PUBLIC PAGE RELEASE HEADER FAILURE: %s\n' "$page" >&2
-        grep -i '^X-WebGIS-Release:' "$tx/headers" | head -n 2 >&2 || true
         fail "PHP served a different release: $page"
     fi
 done
